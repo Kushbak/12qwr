@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=swap');
+
+:root {
+  --color-main: #FF852C
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Commissioner', Arial, Helvetica, sans-serif;
+}
+
+button, a, input {
+  font-family: inherit;
+}
