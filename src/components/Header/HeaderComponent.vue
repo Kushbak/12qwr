@@ -6,9 +6,11 @@
 <template>
   <header class="header">
     <h2 class="header__logo">Мои рецепты</h2>
-    <InputComponent placeholder="Поиск" />
-    <ButtonComponent>Добавить рецепт</ButtonComponent>
-    <ButtonComponent> Вход/Регистрация </ButtonComponent>
+    <InputComponent class="header__search" placeholder="Поиск" />
+    <div class="header__btns">
+      <ButtonComponent>Добавить рецепт</ButtonComponent>
+      <ButtonComponent type="lucid">Вход/Регистрация</ButtonComponent>
+    </div>
   </header>
 </template>
 
@@ -22,6 +24,14 @@
       font-size: 22px;
       color: var(--color-main);
       margin-right: 27px;
+    }
+    &__search {
+      max-width: 360px;
+      width: 100%;
+    }
+    &__btns {
+      display: flex;
+      gap: 24px;
     }
   }
 </style>

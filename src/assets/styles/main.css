@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=swap');
 
 :root {
-  --color-main: #FF852C
+  --color-main: #FF852C;
+  --color-dark: #4B4242;
+  --color-white: #FFFFFF;
+  --color-grey: #7C7575;
 }
 
 * {
