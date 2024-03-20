@@ -24,21 +24,44 @@
 
 <style lang="scss" scoped>
   .button {
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
     padding: 10px 24px;
     border-radius: 12px;
     color: var(--color-white);
     border: none;
     font-size: 16px;
-    &_default {
-      background-color: var(--color-main);
+    &__icon {
+      margin: 0px 4px;
     }
+
     &_lucid {
       background-color: transparent;
       color: var(--color-dark);
+      &:hover {
+        color: var(--color-grey);
+      }
+      &:active {
+        background-color: var(--color-white-almost);
+        color: var(--color-dark);
+      }
+      &:disabled {
+        color: var(--color-dark);
+      }
     }
-    &__icon {
-      margin: 0px 4px;
+
+    &_default {
+      background-color: var(--color-main);
+      &:hover {
+        background-color: var(--color-main-dark);
+      }
+      &:active {
+        background-color: var(--color-main-darker);
+      }
+      &:disabled {
+        background-color: var(--color-grey-light);
+      }
     }
 
     /* change outline color on focus while navigating by tab */

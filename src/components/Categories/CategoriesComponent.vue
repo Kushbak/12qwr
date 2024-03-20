@@ -1,26 +1,15 @@
 <script setup>
   import ButtonComponent from '@/ui/Button/ButtonComponent'
+  import { CATEGORIES } from '@/utils/const'
   import { defineProps } from 'vue'
 
   const props = defineProps(['onCategoryChange', 'activeCategory'])
-
-  const categories = [
-    'Все рецепты',
-    'Выпечка и десерты',
-    'Бульоны',
-    'Закуски',
-    'Напитки',
-    'Основные блюда',
-    'Паста и пицца',
-    'Ризотто',
-    'Салаты',
-  ]
 </script>
 
 <template>
   <ButtonComponent
     type="lucid"
-    v-for="category of categories"
+    v-for="category of CATEGORIES"
     :key="category"
     :class="['category', props.activeCategory && 'category_active']"
   >

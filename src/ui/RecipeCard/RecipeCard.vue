@@ -1,7 +1,7 @@
 <script setup>
   import { defineProps } from 'vue'
   import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
-  import { star, clock, comment, loadImg } from '@/assets/img'
+  import { star, clock, comment, bookmark } from '@/assets/img'
   import { formatTime } from '@/utils'
 
   defineProps(['recipe'])
@@ -10,23 +10,39 @@
 <template>
   <div class="recipe">
     <div class="recipe__imgBlock">
-      <img class="recipe__img" :src="loadImg" />
+      <img class="recipe__img" :src="recipe.image.file" />
     </div>
     <div class="recipe__info">
-      <p class="recipe__category">{{ recipe.category.name }}</p>
+      <p class="recipe__category">
+        {{ recipe.category.name }} {{ recipe.category.id }}
+      </p>
       <h4 class="recipe__title">{{ recipe.name }}</h4>
       <p class="recipe__author">Автор: {{ recipe.user.username }}</p>
       <div class="recipe__meta">
-        <p><img :src="star" /> Рейтинг: {{ recipe.avg_rating }}</p>
-        <p>Ингредиентов: {{ recipe.ingredients_count }}</p>
-        <p><img :src="clock" />{{ formatTime(recipe.cooking_time) }}</p>
-        <p><img :src="comment" />29</p>
+        <p class="recipe__metaItem">
+          <img class="recipe__metaImg" :src="star" /> Рейтинг:
+          {{ recipe.avg_rating ?? 0 }}
+        </p>
+        <p class="recipe__metaItem">
+          Ингредиентов: {{ recipe.ingredients_count }}
+        </p>
+        <p class="recipe__metaItem">
+          <img class="recipe__metaImg" :src="clock" />{{
+            formatTime(recipe.cooking_time)
+          }}
+        </p>
+        <p class="recipe__metaItem">
+          <img class="recipe__metaImg" :src="comment" />29
+        </p>
       </div>
       <p class="recipe__description">
         {{ recipe.description }}
       </p>
       <div class="recipe__actions">
-        <ButtonComponentVue type="lucid">Сохранить рецепт</ButtonComponentVue>
+        <ButtonComponentVue type="lucid" class="recipe__bookmark">
+          <img :src="bookmark" />
+          Сохранить рецепт</ButtonComponentVue
+        >
       </div>
     </div>
   </div>
@@ -38,12 +54,17 @@
     gap: 28px;
     margin: 20px 0;
     &__imgBlock {
-      flex-basis: 24%;
+      overflow: hidden;
+      width: 200px;
     }
     &__img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
     }
     &__info {
+      width: 70%;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -65,6 +86,24 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+    &__meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    &__metaItem {
+      display: flex;
+      align-items: center;
+    }
+    &__metaImg {
+      margin-right: 5px;
+    }
+    &__bookmark {
+      border: 1px solid var(--color-dark);
+      img {
+        margin-right: 10px;
+      }
     }
   }
 </style>

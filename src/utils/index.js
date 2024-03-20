@@ -8,14 +8,28 @@ export const formatTime = (timeString) => {
   let formattedTime = ''
 
   if (days > 0) {
-    formattedTime += `${days} час `
+    formattedTime += `${days} дней`
   }
 
   if (hours > 0 || days > 0) {
-    formattedTime += `${hours} минут `
+    formattedTime += `${hours} час`
   }
 
-  formattedTime += `${minutes} секунд`
+  formattedTime += `${minutes} минут`
 
   return formattedTime.trim()
+}
+
+export const getInitialFilters = () => {
+  return {
+    category: null,
+    ordering: null,
+    search: null,
+    page: 1,
+    limit: 5,
+  }
+}
+
+export const formatFilters = (filters) => {
+  Object.keys(filters)
 }
