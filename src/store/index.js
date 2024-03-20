@@ -6,4 +6,5 @@ export default createStore({
   mutations: {},
   actions: {},
   modules: {},
+  strict: process.env.NODE_ENV !== 'production',
 })
