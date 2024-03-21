@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import recipes from './recipes'
+import modals from './modals'
 
 export default createStore({
   state: {},
@@ -8,6 +9,7 @@ export default createStore({
   actions: {},
   modules: {
     recipes,
+    modals,
   },
   strict: process.env.NODE_ENV !== 'production',
 })

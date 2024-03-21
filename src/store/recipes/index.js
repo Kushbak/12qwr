@@ -1,5 +1,5 @@
 import { recipesApi } from '@/api'
-import { getInitialFilters } from '@/utils'
+import { formatFilters, getInitialFilters } from '@/utils'
 import { CATEGORIES } from '@/utils/const'
 
 export default {
@@ -51,7 +51,7 @@ export default {
   },
   actions: {
     async getAllRecipes({ state, commit }) {
-      const res = await recipesApi.getAllRecipes({ ...state.filters })
+      const res = await recipesApi.getAllRecipes(formatFilters(state.filters))
 
       commit('setCategory', 0)
       commit('setRecipesData', res.data)
@@ -63,7 +63,7 @@ export default {
       commit('setRecipesData', res.data)
     },
     async getRecipesByCategory({ commit }, category) {
-      const res = await recipesApi.getAllRecipes({ category })
+      const res = await recipesApi.getAllRecipes({ category: category || null })
 
       commit('setCategory', category)
       commit('setRecipesData', res.data)

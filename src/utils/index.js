@@ -31,7 +31,14 @@ export const getInitialFilters = () => {
 }
 
 export const formatFilters = (filters) => {
-  Object.keys(filters)
+  const newFilters = {}
+  Object.keys(filters).forEach((key) => {
+    if (key === 'category' && filters[key] !== 0) {
+      newFilters[key] = filters[key]
+      return
+    }
+    newFilters[key] = filters[key]
+  })
 }
 
 export const debounce = (cb, ms) => {

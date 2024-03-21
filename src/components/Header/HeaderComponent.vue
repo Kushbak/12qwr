@@ -8,6 +8,10 @@
   const onChange = debounce((e) => {
     store.dispatch(RECIPES_ACTIONS.SEARCH_RECIPES, e.target.value)
   }, 700)
+
+  const handleOpenLoginModal = () => {
+    store.commit('openModal', { modalName: 'Login' })
+  }
 </script>
 
 <template>
@@ -20,7 +24,9 @@
     />
     <div class="header__btns">
       <ButtonComponent>Добавить рецепт</ButtonComponent>
-      <ButtonComponent type="lucid">Вход/Регистрация</ButtonComponent>
+      <ButtonComponent type="lucid" :onClick="handleOpenLoginModal">
+        Вход/Регистрация
+      </ButtonComponent>
     </div>
   </header>
 </template>
