@@ -14,7 +14,7 @@
     </div>
     <div class="recipe__info">
       <p class="recipe__category">
-        {{ recipe.category.name }} {{ recipe.category.id }}
+        {{ recipe.category.name }}
       </p>
       <h4 class="recipe__title">{{ recipe.name }}</h4>
       <p class="recipe__author">Автор: {{ recipe.user.username }}</p>

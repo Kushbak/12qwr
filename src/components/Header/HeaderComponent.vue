@@ -1,12 +1,23 @@
 <script setup>
+  import store from '@/store'
+  import { RECIPES_ACTIONS } from '@/store/actions'
   import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
+  import { debounce } from '@/utils'
+
+  const onChange = debounce((e) => {
+    store.dispatch(RECIPES_ACTIONS.SEARCH_RECIPES, e.target.value)
+  }, 700)
 </script>
 
 <template>
   <header class="header">
     <h2 class="header__logo">Мои рецепты</h2>
-    <InputComponent class="header__search" placeholder="Поиск" />
+    <InputComponent
+      class="header__search"
+      placeholder="Поиск"
+      @input="onChange"
+    />
     <div class="header__btns">
       <ButtonComponent>Добавить рецепт</ButtonComponent>
       <ButtonComponent type="lucid">Вход/Регистрация</ButtonComponent>

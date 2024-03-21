@@ -8,5 +8,5 @@ const instance = axios.create({
 })
 
 export const recipesApi = {
-  getAllRecipes: () => instance.get('recipe/feed/'),
+  getAllRecipes: (data) => instance.get('recipe/feed/', { params: data }),
 }

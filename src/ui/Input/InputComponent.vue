@@ -1,7 +1,7 @@
 <script setup>
   import { defineModel, defineProps } from 'vue'
 
-  const props = defineProps(['class', 'placeholder'])
+  const props = defineProps(['class', 'placeholder', 'onChange'])
   const modelValue = defineModel()
 </script>
 
@@ -10,6 +10,7 @@
     :placeholder="placeholder"
     :class="['input', props.class]"
     v-model="modelValue"
+    @change="props.onChange"
   />
 </template>
 

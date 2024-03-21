@@ -26,10 +26,23 @@ export const getInitialFilters = () => {
     ordering: null,
     search: null,
     page: 1,
-    limit: 5,
+    limit: 10,
   }
 }
 
 export const formatFilters = (filters) => {
   Object.keys(filters)
+}
+
+export const debounce = (cb, ms) => {
+  let timer
+
+  return (...args) => {
+    if (timer) {
+      clearInterval(timer)
+    }
+    timer = setTimeout(() => {
+      cb(...args)
+    }, ms)
+  }
 }
