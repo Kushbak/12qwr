@@ -1,9 +1,12 @@
 <script setup>
+  import { computed } from 'vue'
   import store from '@/store'
   import { RECIPES_ACTIONS } from '@/store/actions'
   import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
   import { debounce } from '@/utils'
+
+  const user = computed(() => store.state.user)
 
   const onChange = debounce((e) => {
     store.dispatch(RECIPES_ACTIONS.SEARCH_RECIPES, e.target.value)
@@ -12,8 +15,11 @@
   const handleOpenLoginModal = () => {
     store.commit('openModal', {
       modalName: 'Login',
-      props: { whiteClose: true },
     })
+  }
+
+  const handleProfileClick = () => {
+    console.log('profile clicked')
   }
 </script>
 
@@ -27,7 +33,14 @@
     />
     <div class="header__btns">
       <ButtonComponent>Добавить рецепт</ButtonComponent>
-      <ButtonComponent type="lucid" :onClick="handleOpenLoginModal">
+      <ButtonComponent
+        v-if="user.userData"
+        type="lucid"
+        :onClick="handleProfileClick"
+      >
+        Профиль
+      </ButtonComponent>
+      <ButtonComponent v-else type="lucid" :onClick="handleOpenLoginModal">
         Вход/Регистрация
       </ButtonComponent>
     </div>

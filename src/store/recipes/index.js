@@ -51,32 +51,34 @@ export default {
   },
   actions: {
     async getAllRecipes({ state, commit }) {
-      const res = await recipesApi.getAllRecipes(formatFilters(state.filters))
+      const data = await recipesApi.getAllRecipes(formatFilters(state.filters))
 
       commit('setCategory', 0)
-      commit('setRecipesData', res.data)
+      commit('setRecipesData', data)
     },
     async searchRecipes({ commit }, search) {
-      const res = await recipesApi.getAllRecipes({ search })
+      const data = await recipesApi.getAllRecipes({ search })
 
       commit('setSearch', search)
-      commit('setRecipesData', res.data)
+      commit('setRecipesData', data)
     },
     async getRecipesByCategory({ commit }, category) {
-      const res = await recipesApi.getAllRecipes({ category: category || null })
+      const data = await recipesApi.getAllRecipes({
+        category: category || null,
+      })
 
       commit('setCategory', category)
-      commit('setRecipesData', res.data)
+      commit('setRecipesData', data)
     },
     async getOrderedRecipes({ state, commit }, ordering) {
-      const res = await recipesApi.getAllRecipes({
+      const data = await recipesApi.getAllRecipes({
         ...state.filters,
         category: state.filters.category === 0 ? null : state.filters.category,
         ordering,
       })
 
       commit('setOrdering', ordering)
-      commit('setRecipesData', res.data)
+      commit('setRecipesData', data)
     },
   },
   modules: {},

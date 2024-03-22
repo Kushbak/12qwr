@@ -3,18 +3,21 @@
   import { computed } from 'vue'
   import LoginModal from './components/Login/LoginModal.vue'
   import RegisterModal from './components/Register/RegisterModal.vue'
-  import { MODAL_KEYS } from '@/utils/const'
+  import { MODAL_KEYS, MODALS_WITH_WHTIE_CLOSE } from '@/utils/const'
   import ModalContainer from './ModalContainer.vue'
 
   const modals = computed(() => store.state.modals)
-  console.log({ modals })
+
+  const withWhiteClose = computed(() => {
+    return MODALS_WITH_WHTIE_CLOSE.includes(modals.value.currentModal)
+  })
 </script>
 
 <template>
   <transition>
     <ModalContainer
       v-if="modals.currentModal !== null"
-      :withClose="modals.props.withClose"
+      :whiteClose="withWhiteClose"
     >
       <LoginModal
         v-if="modals.currentModal === MODAL_KEYS.LOGIN"

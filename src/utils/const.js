@@ -26,3 +26,5 @@ export const MODAL_KEYS = {
   LOGIN: 'Login',
   REGISTER: 'Register',
 }
+
+export const MODALS_WITH_WHTIE_CLOSE = [MODAL_KEYS.LOGIN]

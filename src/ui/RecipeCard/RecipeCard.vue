@@ -1,10 +1,23 @@
 <script setup>
-  import { defineProps } from 'vue'
+  import { computed, defineProps } from 'vue'
   import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
   import { star, clock, comment, bookmark } from '@/assets/img'
   import { formatTime } from '@/utils'
+  import store from '@/store'
+  import { MODAL_KEYS } from '@/utils/const'
 
   defineProps(['recipe'])
+
+  const user = computed(() => store.state.user)
+
+  const handleSaveClick = () => {
+    // todo make `withAuth` hof to open login modal
+    if (!user.value.userData) {
+      store.commit('openModal', { modalName: MODAL_KEYS.LOGIN })
+      return
+    }
+    console.log('saved!')
+  }
 </script>
 
 <template>
@@ -39,7 +52,11 @@
         {{ recipe.description }}
       </p>
       <div class="recipe__actions">
-        <ButtonComponentVue type="lucid" class="recipe__bookmark">
+        <ButtonComponentVue
+          type="lucid"
+          class="recipe__bookmark"
+          :onClick="handleSaveClick"
+        >
           <img :src="bookmark" />
           Сохранить рецепт</ButtonComponentVue
         >

@@ -7,7 +7,6 @@
   const openLoginModal = () => {
     store.commit('openModal', {
       modalName: MODAL_KEYS.LOGIN,
-      props: { whiteClose: true },
     })
   }
 </script>

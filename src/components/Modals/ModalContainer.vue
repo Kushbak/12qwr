@@ -1,6 +1,9 @@
 <script setup>
+  import { defineProps } from 'vue'
   import { xMark, xMarkWhite } from '@/assets/img'
   import store from '@/store'
+
+  const props = defineProps(['whiteClose'])
 
   const onOutsideClick = () => {
     store.commit('closeModal')
@@ -12,11 +15,7 @@
     <div class="modalContainer">
       <slot></slot>
       <button class="modalContainer__close" @click="onOutsideClick">
-        <img
-          v-if="store.state.modals.props.whiteClose"
-          :src="xMarkWhite"
-          alt="x"
-        />
+        <img v-if="props.whiteClose" :src="xMarkWhite" alt="x" />
         <img v-else :src="xMark" alt="x" />
       </button>
     </div>
