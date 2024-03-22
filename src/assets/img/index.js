@@ -12,6 +12,7 @@ import trash from './icons/trash.svg'
 import triangleBottom from './icons/triangle-bottom.svg'
 import video from './icons/video.svg'
 import xMark from './icons/x-mark.svg'
+import xMarkWhite from './icons/x-mark-white.svg'
 
 import loadImg from './load-img.png'
 
@@ -31,4 +32,5 @@ export {
   triangleBottom,
   video,
   xMark,
+  xMarkWhite,
 }

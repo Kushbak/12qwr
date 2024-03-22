@@ -21,3 +21,8 @@ export const CATEGORIES = [
   'Завтраки',
   'Заготовки',
 ]
+
+export const MODAL_KEYS = {
+  LOGIN: 'Login',
+  REGISTER: 'Register',
+}

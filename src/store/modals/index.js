@@ -7,7 +7,7 @@ export default {
   mutations: {
     openModal(state, newModal) {
       state.currentModal = newModal.modalName
-      state.props = newModal.props
+      state.props = newModal.props || {}
     },
     closeModal(state) {
       state.currentModal = null

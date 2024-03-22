@@ -1,7 +1,7 @@
 <script setup>
   import { defineModel, defineProps } from 'vue'
 
-  const props = defineProps(['class', 'placeholder', 'onChange'])
+  const props = defineProps(['class', 'placeholder', 'onChange', 'type'])
   const modelValue = defineModel()
 </script>
 
@@ -10,6 +10,7 @@
     :placeholder="placeholder"
     :class="['input', props.class]"
     v-model="modelValue"
+    :type="props.type || 'text'"
     @change="props.onChange"
   />
 </template>
@@ -18,10 +19,9 @@
   .input {
     background-color: #f1f1f1;
     border-radius: 12px;
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-size: 16px;
     border: none;
-    transition: all 0.5s;
     &:focus {
       outline: 1px solid var(--color-main);
       caret-color: var(--color-main);

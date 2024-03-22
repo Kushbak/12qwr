@@ -1,4 +1,5 @@
 <script setup>
+  import { xMark, xMarkWhite } from '@/assets/img'
   import store from '@/store'
 
   const onOutsideClick = () => {
@@ -8,8 +9,16 @@
 
 <template>
   <div class="modalContainer__backdrop">
-    <div class="modalContainer" v-click-outside="onOutsideClick">
+    <div class="modalContainer">
       <slot></slot>
+      <button class="modalContainer__close" @click="onOutsideClick">
+        <img
+          v-if="store.state.modals.props.whiteClose"
+          :src="xMarkWhite"
+          alt="x"
+        />
+        <img v-else :src="xMark" alt="x" />
+      </button>
     </div>
   </div>
 </template>
@@ -18,6 +27,9 @@
   .modalContainer {
     border-radius: 24px;
     background-color: var(--color-white);
+    position: relative;
+    // to child elements inherit border-radius
+    overflow: hidden;
     &__backdrop {
       display: flex;
       justify-content: center;
@@ -28,6 +40,14 @@
       left: 0;
       width: 100%;
       height: 100%;
+    }
+    &__close {
+      cursor: pointer;
+      border: none;
+      background: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
     }
   }
 </style>

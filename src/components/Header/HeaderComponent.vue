@@ -10,7 +10,10 @@
   }, 700)
 
   const handleOpenLoginModal = () => {
-    store.commit('openModal', { modalName: 'Login' })
+    store.commit('openModal', {
+      modalName: 'Login',
+      props: { whiteClose: true },
+    })
   }
 </script>
 

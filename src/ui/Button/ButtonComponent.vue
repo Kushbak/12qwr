@@ -8,12 +8,8 @@
 <template>
   <button
     @click="props.onClick"
-    :class="[
-      'button',
-      btnTypeClass,
-      props.class,
-      props.disabled && 'button_disabled',
-    ]"
+    :class="['button', btnTypeClass, props.class]"
+    :disabled="props.disabled"
   >
     <slot></slot>
     <span class="button__icon">
@@ -24,9 +20,10 @@
 
 <style lang="scss" scoped>
   .button {
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    cursor: pointer;
+    justify-content: center;
     padding: 10px 24px;
     border-radius: 12px;
     color: var(--color-white);
@@ -62,6 +59,11 @@
       &:disabled {
         background-color: var(--color-grey-light);
       }
+    }
+
+    &_light {
+      background-color: var(--color-white);
+      color: var(--color-main);
     }
 
     /* change outline color on focus while navigating by tab */
