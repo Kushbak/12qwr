@@ -28,3 +28,14 @@ export const MODAL_KEYS = {
 }
 
 export const MODALS_WITH_WHTIE_CLOSE = [MODAL_KEYS.LOGIN]
+
+export const ERROR_MESSAGES = {
+  'No active account found with the given credentials':
+    'Неправильная почта или пароль',
+  'This field is required.': 'Это поле обязательно',
+  'User with this Email already exists.': 'Такая почта уже зарегистрирована',
+  'User with this username already exists.':
+    'Такое имя пользователя уже зарегистрировано',
+  'This password is too short. It must contain at least 8 characters.':
+    'Пароль должен состоять минимум из 8 символов',
+}

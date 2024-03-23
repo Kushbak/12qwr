@@ -76,7 +76,9 @@
       v-if="hiddenCategories.length"
     >
       Еще
-      <img :src="isMoreCategoriesShown ? arrowTop : arrowBottom" />
+      <template #icon>
+        <img :src="isMoreCategoriesShown ? arrowTop : arrowBottom" />
+      </template>
     </ButtonComponent>
     <div
       class="categories__dropdown"

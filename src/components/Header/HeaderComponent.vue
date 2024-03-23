@@ -5,6 +5,7 @@
   import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
   import { debounce } from '@/utils'
+  import { arrowBottom } from '@/assets/img'
 
   const user = computed(() => store.state.user)
 
@@ -39,9 +40,15 @@
         :onClick="handleProfileClick"
       >
         Профиль
+        <template #icon>
+          <img :src="arrowBottom" />
+        </template>
       </ButtonComponent>
       <ButtonComponent v-else type="lucid" :onClick="handleOpenLoginModal">
         Вход/Регистрация
+        <template #icon>
+          <img :src="arrowBottom" />
+        </template>
       </ButtonComponent>
     </div>
   </header>
@@ -61,6 +68,7 @@
     &__search {
       max-width: 360px;
       width: 100%;
+      margin-bottom: 0;
     }
     &__btns {
       display: flex;

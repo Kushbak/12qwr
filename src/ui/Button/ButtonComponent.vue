@@ -1,6 +1,6 @@
 <script setup>
-  import { defineProps } from 'vue'
-
+  import { defineProps, useSlots } from 'vue'
+  const slots = useSlots()
   const props = defineProps(['onClick', 'class', 'disabled', 'type'])
   const btnTypeClass = 'button_' + (props.type || 'default')
 </script>
@@ -12,7 +12,7 @@
     :disabled="props.disabled"
   >
     <slot></slot>
-    <span class="button__icon">
+    <span v-if="slots.icon" class="button__icon">
       <slot name="icon"></slot>
     </span>
   </button>

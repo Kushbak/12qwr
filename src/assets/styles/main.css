@@ -9,6 +9,7 @@
   --color-white-almost: #F1F1F1;
   --color-grey: #7C7575;
   --color-grey-light: #BFBEBE;
+  --color-error: #E44C4C;
 }
 
 * {
@@ -23,4 +24,9 @@ body {
 
 button, a, input {
   font-family: inherit;
+}
+
+.error {
+  font-size: 14px;
+  color: var(--color-error);
 }
