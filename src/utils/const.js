@@ -5,22 +5,10 @@ export const ORDER_BY = {
   COMMENTS_COUNT_DESC: '-comments_count',
 }
 
-export const CATEGORIES = [
-  'Все рецепты',
-  'Выпечка и десерты',
-  'Бульоны',
-  'Закуски',
-  'Напитки',
-  'Основные блюда',
-  'Паста и пицца',
-  'Ризотто',
-  'Салаты',
-  'Соусы и маринады',
-  'Супы',
-  'Сендвичи',
-  'Завтраки',
-  'Заготовки',
-]
+export const ALL_CATEGORY = {
+  id: 0,
+  name: 'Все рецепты',
+}
 
 export const MODAL_KEYS = {
   LOGIN: 'Login',

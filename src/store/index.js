@@ -2,12 +2,29 @@ import { createStore } from 'vuex'
 import recipes from './recipes'
 import modals from './modals'
 import user from './user'
+import { recipesApi } from '@/api'
+import { ALL_CATEGORY } from '@/utils/const'
 
 export default createStore({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
+  state: {
+    categories: [],
+  },
+  getters: {
+    getCategories(state) {
+      return state.categories
+    },
+  },
+  mutations: {
+    setCategories(state, newCategories) {
+      state.categories = newCategories
+    },
+  },
+  actions: {
+    async getAllCategories({ commit }) {
+      const res = await recipesApi.getAllCategories({ limit: 50 })
+      commit('setCategories', [ALL_CATEGORY, ...res.data.list])
+    },
+  },
   modules: {
     recipes,
     modals,

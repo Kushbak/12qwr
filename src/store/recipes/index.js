@@ -1,6 +1,6 @@
 import { recipesApi } from '@/api'
 import { formatFilters, getInitialFilters } from '@/utils'
-import { CATEGORIES } from '@/utils/const'
+import store from '..'
 
 export default {
   state: {
@@ -26,8 +26,9 @@ export default {
   },
   mutations: {
     setRecipesData(state, newRecipesData) {
+      const categories = store.state.categories
       state.data = newRecipesData.list
-      state.title = state.filters.category ? CATEGORIES[state.filters.category] || 'Прочее' : CATEGORIES[0]
+      state.title = state.filters.category ? categories[state.filters.category].name || 'Прочее' : categories[0].name
       state.totalCount = newRecipesData.total_count
     },
     setOrdering(state, newOrdering) {

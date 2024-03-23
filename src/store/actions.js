@@ -6,6 +6,7 @@ export const RECIPES_ACTIONS = {
   GET_MY_BOOKMARKS: 'getMyBookmarks',
   GET_MY_RECIPES: 'getMyRecipes',
   GET_RECIPES_BY_USER_ID: 'getRecipesByUserId',
+  GET_ALL_CATEGORIES: 'getAllCategories',
 }
 
 export const USER_ACTIONS = {
