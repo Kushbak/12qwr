@@ -6,6 +6,7 @@
   --color-main-darker: #D96A19;
   --color-dark: #4B4242;
   --color-white: #FFFFFF;
+  --color-black: #000000;
   --color-white-almost: #F1F1F1;
   --color-grey: #7C7575;
   --color-grey-light: #BFBEBE;
@@ -24,6 +25,10 @@ body {
 
 button, a, input {
   font-family: inherit;
+}
+
+a {
+  text-decoration: none;
 }
 
 .error {

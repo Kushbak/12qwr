@@ -11,8 +11,7 @@
   const isSearch = computed(() => store.getters.isSearch)
 
   const onOrderingClick = (newOrdering) => {
-    const data =
-      recipes.value.filters.ordering === newOrdering ? null : newOrdering
+    const data = recipes.value.filters.ordering === newOrdering ? null : newOrdering
     store.dispatch(RECIPES_ACTIONS.GET_ORDERED_RECIPES, data)
   }
 
@@ -24,23 +23,18 @@
 </script>
 
 <template>
-  <p v-if="isSearch" class="recipesList__searchResultText">
-    Результаты поиска по запросу
-  </p>
+  <p v-if="isSearch" class="recipesList__searchResultText">Результаты поиска по запросу</p>
   <h4 class="recipesList__title">
     {{ isSearch ? recipes.filters.search : recipes.title }}
   </h4>
   <div class="recipesList__info">
-    <p>
-      {{ isSearch ? 'Найдено рецептов' : 'Рецептов' }}: {{ recipes.totalCount }}
-    </p>
+    <p>{{ isSearch ? 'Найдено рецептов' : 'Рецептов' }}: {{ recipes.totalCount }}</p>
     <div class="recipesList__sort">
       Сортировать:
       <ButtonComponentVue
         :class="[
           'recipesList__sortBtn',
-          recipes.filters.ordering === ORDER_BY.AVG_RATING_DESC &&
-            'recipesList__sortBtn_active',
+          recipes.filters.ordering === ORDER_BY.AVG_RATING_DESC && 'recipesList__sortBtn_active',
         ]"
         type="lucid"
         :onClick="() => onOrderingClick(ORDER_BY.AVG_RATING_DESC)"
@@ -50,8 +44,7 @@
       <ButtonComponentVue
         :class="[
           'recipesList__sortBtn',
-          recipes.filters.ordering === ORDER_BY.COMMENTS_COUNT_DESC &&
-            'recipesList__sortBtn_active',
+          recipes.filters.ordering === ORDER_BY.COMMENTS_COUNT_DESC && 'recipesList__sortBtn_active',
         ]"
         type="lucid"
         :onClick="() => onOrderingClick(ORDER_BY.COMMENTS_COUNT_DESC)"

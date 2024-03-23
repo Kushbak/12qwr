@@ -1,13 +1,15 @@
 <script setup>
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import store from '@/store'
   import { RECIPES_ACTIONS } from '@/store/actions'
   import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
   import { debounce } from '@/utils'
-  import { arrowBottom } from '@/assets/img'
+  import { arrowBottom, arrowTop } from '@/assets/img'
+  import router from '@/router'
 
   const user = computed(() => store.state.user)
+  const isProfileDropdownOpen = ref(false)
 
   const onChange = debounce((e) => {
     store.dispatch(RECIPES_ACTIONS.SEARCH_RECIPES, e.target.value)
@@ -20,13 +22,23 @@
   }
 
   const handleProfileClick = () => {
-    console.log('profile clicked')
+    isProfileDropdownOpen.value = !isProfileDropdownOpen.value
+  }
+
+  const navigateToProfile = () => {
+    router.push('profile')
+  }
+
+  const logout = () => {
+    store.commit('logout')
   }
 </script>
 
 <template>
   <header class="header">
-    <h2 class="header__logo">Мои рецепты</h2>
+    <router-link to="/">
+      <h2 class="header__logo">Мои рецепты</h2>
+    </router-link>
     <InputComponent
       class="header__search"
       placeholder="Поиск"
@@ -41,7 +53,7 @@
       >
         Профиль
         <template #icon>
-          <img :src="arrowBottom" />
+          <img :src="isProfileDropdownOpen ? arrowTop : arrowBottom" />
         </template>
       </ButtonComponent>
       <ButtonComponent v-else type="lucid" :onClick="handleOpenLoginModal">
@@ -50,6 +62,18 @@
           <img :src="arrowBottom" />
         </template>
       </ButtonComponent>
+      <!-- split dropdowns to component -->
+      <div
+        class="header__dropdown"
+        v-if="isProfileDropdownOpen && user.userData"
+      >
+        <ButtonComponent type="lucid" :onClick="navigateToProfile">
+          Перейти в профиль
+        </ButtonComponent>
+        <ButtonComponent type="lucid" class="header__logout" :onClick="logout">
+          Выйти
+        </ButtonComponent>
+      </div>
     </div>
   </header>
 </template>
@@ -73,6 +97,17 @@
     &__btns {
       display: flex;
       gap: 24px;
+    }
+    &__dropdown {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      background-color: var(--color-white);
+      box-shadow: 0px 5px 12px 0px #28262214;
+      border-radius: 12px;
+    }
+    &__logout {
+      color: var(--color-error);
     }
   }
 </style>

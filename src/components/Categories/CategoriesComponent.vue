@@ -5,6 +5,7 @@
   import ButtonComponent from '@/ui/Button/ButtonComponent'
   import { CATEGORIES } from '@/utils/const'
   import { arrowBottom, arrowTop } from '@/assets/img'
+  import router from '@/router'
 
   const activeCategory = computed(() => store.state.recipes.filters.category)
   const categories = ref([])
@@ -13,17 +14,16 @@
 
   const onMoreCategoriesClick = () => {
     isMoreCategoriesShown.value = !isMoreCategoriesShown.value
-    console.log(0, isMoreCategoriesShown.value)
   }
 
   const hideMoreCategories = () => {
     if (isMoreCategoriesShown.value) {
       // isMoreCategoriesShown.value = false
     }
-    console.log(1, isMoreCategoriesShown.value)
   }
 
   const onCategoryClick = (category) => {
+    if (router.currentRoute !== '/') router.push('/')
     if (category === activeCategory.value) return
     if (category === 0) {
       store.dispatch(RECIPES_ACTIONS.GET_RECIPES_BY_CATEGORY, 0)
@@ -61,10 +61,7 @@
       type="lucid"
       v-for="(category, index) of categories"
       :key="category"
-      :class="[
-        'categories__item',
-        CATEGORIES[activeCategory] === category && 'categories__item_active',
-      ]"
+      :class="['categories__item', CATEGORIES[activeCategory] === category && 'categories__item_active']"
       :onClick="() => onCategoryClick(index)"
     >
       {{ category }}
@@ -80,11 +77,7 @@
         <img :src="isMoreCategoriesShown ? arrowTop : arrowBottom" />
       </template>
     </ButtonComponent>
-    <div
-      class="categories__dropdown"
-      v-click-outside="hideMoreCategories"
-      v-if="isMoreCategoriesShown"
-    >
+    <div class="categories__dropdown" v-click-outside="hideMoreCategories" v-if="isMoreCategoriesShown">
       <ButtonComponent
         type="lucid"
         v-for="(category, index) of hiddenCategories"

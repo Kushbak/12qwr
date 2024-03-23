@@ -16,7 +16,6 @@
       store.commit('openModal', { modalName: MODAL_KEYS.LOGIN })
       return
     }
-    console.log('saved!')
   }
 </script>
 

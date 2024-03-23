@@ -8,6 +8,9 @@ export default {
     title: '',
     totalCount: 0,
     filters: getInitialFilters(),
+    myBookmarks: [],
+    myRecipes: [],
+    userRecipes: [],
   },
   getters: {
     paginationData(state) {
@@ -24,9 +27,7 @@ export default {
   mutations: {
     setRecipesData(state, newRecipesData) {
       state.data = newRecipesData.list
-      state.title = state.filters.category
-        ? CATEGORIES[state.filters.category] || 'Прочее'
-        : CATEGORIES[0]
+      state.title = state.filters.category ? CATEGORIES[state.filters.category] || 'Прочее' : CATEGORIES[0]
       state.totalCount = newRecipesData.total_count
     },
     setOrdering(state, newOrdering) {
@@ -47,6 +48,15 @@ export default {
     },
     resetFilters(state) {
       state.filters = getInitialFilters()
+    },
+    setMyBookmarks(state, recipes) {
+      state.myBookmarks = recipes
+    },
+    setMyRecipes(state, recipes) {
+      state.myRecipes = recipes
+    },
+    setUserRecipes(state, recipes) {
+      state.userRecipes = recipes
     },
   },
   actions: {
@@ -79,6 +89,21 @@ export default {
 
       commit('setOrdering', ordering)
       commit('setRecipesData', res.data)
+    },
+    async getMyBookmarks({ commit }) {
+      const res = await recipesApi.getMyBookmarks({ limit: 50 })
+
+      commit('setMyBookmarks', res.data)
+    },
+    async getMyRecipes({ commit, rootState }) {
+      const res = await recipesApi.getRecipesByUserId(rootState.user.userData.id, { limit: 50 })
+
+      commit('setMyRecipes', res.data)
+    },
+    async getRecipesByUserId({ commit }, userId) {
+      const res = await recipesApi.getRecipesByUserId(userId, { limit: 50 })
+
+      commit('setUserRecipes', res.data)
     },
   },
 }

@@ -5,6 +5,7 @@ import bookmarkActive from './icons/bookmark-active.svg'
 import clock from './icons/clock.svg'
 import comment from './icons/comment.svg'
 import edit from './icons/edit.svg'
+import emptyAvatar from './empty-avatar.png'
 import image from './icons/image.svg'
 import play from './icons/play.svg'
 import star from './icons/star.svg'
@@ -25,6 +26,7 @@ export {
   clock,
   comment,
   edit,
+  emptyAvatar,
   image,
   play,
   star,

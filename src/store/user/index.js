@@ -1,4 +1,6 @@
 import { usersApi } from '@/api'
+import { getTokenExpirationInSeconds, removeCookie, setCookie } from '@/utils'
+import { USER_ACTIONS } from '../actions'
 
 export default {
   state: {
@@ -13,7 +15,8 @@ export default {
     },
     logout(state) {
       state.userData = null
-      localStorage.removeItem('token')
+      removeCookie(process.env.VUE_APP_CBAT)
+      removeCookie(process.env.VUE_APP_CBRT)
     },
     setErrors(state, errors) {
       state.errors = errors
@@ -23,13 +26,24 @@ export default {
     },
   },
   actions: {
-    async login({ commit }, userData) {
+    async getProfile({ commit }) {
+      try {
+        const res = await usersApi.getProfile()
+        commit('setUserData', res.data)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async login({ commit, dispatch }, userData) {
       commit('setLoading', true)
       commit('setErrors', {})
       try {
         const res = await usersApi.login(userData)
-        console.log({ res })
-        // localStorage.setItem('token', JSON.stringify(res.data))
+        const accessExp = getTokenExpirationInSeconds(res.data.access)
+        const refreshExp = getTokenExpirationInSeconds(res.data.refresh)
+        setCookie(process.env.VUE_APP_CBAT, res.data.access, accessExp)
+        setCookie(process.env.VUE_APP_CBRT, res.data.refresh, refreshExp)
+        dispatch(USER_ACTIONS.GET_PROFILE)
       } catch (e) {
         commit('setErrors', e.response.data.errors || e.response.data)
         return Promise.reject(e)
@@ -42,8 +56,8 @@ export default {
       commit('setErrors', {})
       try {
         const res = await usersApi.register(userData)
-        console.log({ res })
         // localStorage.setItem('token', JSON.stringify(res.data))
+        console.log({ res })
       } catch (e) {
         commit('setErrors', e.response.data.errors || e.response.data)
         return Promise.reject(e)
