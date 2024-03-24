@@ -55,7 +55,9 @@
   </div>
   <div class="recipesList__list">
     <template v-for="recipe of recipes.data" :key="recipe.id">
-      <RecipeCard :recipe="recipe" />
+      <router-link :to="`/recipe/${recipe.id}`">
+        <RecipeCard :recipe="recipe" />
+      </router-link>
     </template>
   </div>
 </template>

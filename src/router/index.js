@@ -1,5 +1,6 @@
 import MainViewVue from '@/views/MainView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import RecipeDetailView from '@/views/RecipeDetailView.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
@@ -15,6 +16,11 @@ const routes = [
     meta: {
       auth: true,
     },
+  },
+  {
+    path: '/recipe/:id',
+    name: 'Recipe Details',
+    component: RecipeDetailView,
   },
 ]
 

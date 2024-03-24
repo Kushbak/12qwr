@@ -7,6 +7,8 @@ export const RECIPES_ACTIONS = {
   GET_MY_RECIPES: 'getMyRecipes',
   GET_RECIPES_BY_USER_ID: 'getRecipesByUserId',
   GET_ALL_CATEGORIES: 'getAllCategories',
+  BOOKMARK_RECIPE: 'bookmarkRecipe',
+  GET_RECIPE_BY_ID: 'getRecipeById',
 }
 
 export const USER_ACTIONS = {

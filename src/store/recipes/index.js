@@ -11,6 +11,7 @@ export default {
     myBookmarks: [],
     myRecipes: [],
     userRecipes: [],
+    recipeDetails: null,
   },
   getters: {
     paginationData(state) {
@@ -59,6 +60,9 @@ export default {
     setUserRecipes(state, recipes) {
       state.userRecipes = recipes
     },
+    setRecipeDetails(state, recipe) {
+      state.recipeDetails = recipe
+    },
   },
   actions: {
     async getAllRecipes({ state, commit }) {
@@ -105,6 +109,15 @@ export default {
       const res = await recipesApi.getRecipesByUserId(userId, { limit: 50 })
 
       commit('setUserRecipes', res.data)
+    },
+    async bookmarkRecipe(context, data) {
+      const res = await recipesApi.addBookmark(data)
+      console.log({ res })
+    },
+    async getRecipeById({ commit }, recipeId) {
+      const res = await recipesApi.getRecipeById(recipeId)
+
+      commit('setRecipeDetails', res.data)
     },
   },
 }

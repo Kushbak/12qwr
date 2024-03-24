@@ -5,17 +5,23 @@
   import { formatTime } from '@/utils'
   import store from '@/store'
   import { MODAL_KEYS } from '@/utils/const'
+  import { RECIPES_ACTIONS } from '@/store/actions'
 
-  defineProps(['recipe'])
+  const props = defineProps(['recipe'])
 
   const user = computed(() => store.state.user)
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     // todo make `withAuth` hof to open login modal
     if (!user.value.userData) {
       store.commit('openModal', { modalName: MODAL_KEYS.LOGIN })
       return
     }
+    // todo add reactive changing of layout for bookmarks
+    await store.dispatch(RECIPES_ACTIONS.BOOKMARK_RECIPE, {
+      recipe: props.recipe.id,
+      is_bookmarked: !props.recipe.is_bookmarked,
+    })
   }
 </script>
 
@@ -35,30 +41,15 @@
           <img class="recipe__metaImg" :src="star" /> Рейтинг:
           {{ recipe.avg_rating ?? 0 }}
         </p>
+        <p class="recipe__metaItem">Ингредиентов: {{ recipe.ingredients_count }}</p>
         <p class="recipe__metaItem">
-          Ингредиентов: {{ recipe.ingredients_count }}
+          <img class="recipe__metaImg" :src="clock" />{{ formatTime(recipe.cooking_time) }}
         </p>
-        <p class="recipe__metaItem">
-          <img class="recipe__metaImg" :src="clock" />{{
-            formatTime(recipe.cooking_time)
-          }}
-        </p>
-        <p class="recipe__metaItem">
-          <img class="recipe__metaImg" :src="comment" />29
-        </p>
-      </div>
-      <p class="recipe__description">
-        {{ recipe.description }}
-      </p>
-      <div class="recipe__actions">
-        <ButtonComponentVue
-          type="lucid"
-          class="recipe__bookmark"
-          :onClick="handleSaveClick"
-        >
+        <p class="recipe__metaItem"><img class="recipe__metaImg" :src="comment" />29</p>
+        <ButtonComponentVue type="lucid" class="recipe__bookmark" :onClick="handleSaveClick">
           <img :src="bookmark" />
-          Сохранить рецепт</ButtonComponentVue
-        >
+          {{ recipe.is_bookmarked ? 'Сохранено' : 'Сохранить рецепт' }}
+        </ButtonComponentVue>
       </div>
     </div>
   </div>
