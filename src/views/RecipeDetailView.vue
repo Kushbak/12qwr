@@ -3,37 +3,22 @@
   import store from '@/store'
   import { RECIPES_ACTIONS } from '@/store/actions'
   import { useRoute } from 'vue-router'
-  import { formatCommentDate, formatTime } from '@/utils'
-  import { bookmark, clock, comment, emptyAvatar, star, starEmpty } from '@/assets/img'
-  import { MODAL_KEYS } from '@/utils/const'
+  import { formatCommentDate } from '@/utils'
+  import { star, starEmpty } from '@/assets/img'
   import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
+  import AvatarComponent from '@/ui/Avatar/AvatarComponent.vue'
+  import { withAuth } from '@/utils/hofs'
+  import RecipeMeta from '@/ui/RecipeMeta/RecipeMeta.vue'
 
   const route = useRoute()
   const recipe = computed(() => store.state.recipes.recipeDetails)
-  const user = computed(() => store.state.user)
   const commentInput = ref('')
 
-  const handleSaveClick = async () => {
-    // todo make `withAuth` hof to open login modal
-    if (!user.value.userData) {
-      store.commit('openModal', { modalName: MODAL_KEYS.LOGIN })
-      return
-    }
-    // todo add reactive changing of layout for bookmarks
-    await store.dispatch(RECIPES_ACTIONS.BOOKMARK_RECIPE, {
-      recipe: recipe.value.id,
-      is_bookmarked: !recipe.value.is_bookmarked,
-    })
-  }
-
-  const addComment = () => {
-    if (!user.value.userData) {
-      store.commit('openModal', { modalName: MODAL_KEYS.LOGIN })
-      return
-    }
-    store.dispatch(RECIPES_ACTIONS.ADD_COMMENT_TO_RECIPE, { text: commentInput.value, recipe: recipe.value.id })
-  }
+  const addComment = withAuth(async () => {
+    await store.dispatch(RECIPES_ACTIONS.ADD_COMMENT_TO_RECIPE, { text: commentInput.value, recipe: recipe.value.id })
+    commentInput.value = ''
+  })
 
   onMounted(() => {
     store.dispatch(RECIPES_ACTIONS.GET_RECIPE_BY_ID, route.params.id)
@@ -45,23 +30,10 @@
     <div class="recipe__category">{{ recipe.category.name }}</div>
     <div class="recipe__title">{{ recipe.name }}</div>
     <div class="recipe__author">
-      <img :src="recipe.user.avatar || emptyAvatar" alt="" />
+      <AvatarComponent :avatar="recipe.user.avatar?.file" />
       {{ recipe.user.username }}
     </div>
-    <!-- todo make meta ui component -->
-    <div class="recipe__meta">
-      <p class="recipe__metaItem">
-        <img class="recipe__metaImg" :src="star" /> Рейтинг:
-        {{ recipe.avg_rating ?? 0 }}
-      </p>
-      <p class="recipe__metaItem">Ингредиентов: {{ recipe.ingredients_count }}</p>
-      <p class="recipe__metaItem"><img class="recipe__metaImg" :src="clock" />{{ formatTime(recipe.cooking_time) }}</p>
-      <p class="recipe__metaItem"><img class="recipe__metaImg" :src="comment" />29</p>
-      <ButtonComponentVue type="lucid" class="recipe__bookmark" :onClick="handleSaveClick">
-        <img :src="bookmark" />
-        {{ recipe.is_bookmarked ? 'Сохранено' : 'Сохранить рецепт' }}
-      </ButtonComponentVue>
-    </div>
+    <RecipeMeta :recipe="recipe" :withSave="true" />
     <iframe height="360" width="100%" :src="recipe.cooking_url" />
     <p class="recipe__description">{{ recipe.description }}</p>
     <img class="recipe__img" :src="recipe.image.file" :alt="recipe.name" />
@@ -104,7 +76,7 @@
       <div class="comment" v-for="commentData of recipe.comments" :key="commentData.id">
         <div class="comment__author">
           <!-- todo split avatar to component -->
-          <img :src="commentData.user.avatar?.file || emptyAvatar" alt="avatar" class="comment__avatar" />
+          <AvatarComponent :avatar="commentData.user.avatar?.file" />
           <div class="comment__meta">
             <p class="comment__authorName">{{ commentData.user.username }}</p>
             <p class="comment__date">{{ formatCommentDate(commentData.created_at) }}</p>
@@ -150,11 +122,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      img {
-        margin-right: 8px;
-        max-width: 32px;
-        width: 100%;
-      }
+      gap: 8px;
     }
     &__description {
       font-size: 16px;
@@ -162,26 +130,6 @@
       white-space: pre-wrap;
       font-family: inherit;
       line-height: 24px;
-    }
-    &__meta {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 24px;
-      margin-top: 12px;
-    }
-    &__metaItem {
-      display: flex;
-      align-items: center;
-    }
-    &__metaImg {
-      margin-right: 5px;
-    }
-    &__bookmark {
-      img {
-        margin-right: 10px;
-      }
     }
     &__img {
       width: 100%;
@@ -233,10 +181,6 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 4px;
-    }
-    &__avatar {
-      width: 32px;
-      height: 32px;
     }
     &__authorName {
       font-size: 16px;

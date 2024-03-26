@@ -1,28 +1,9 @@
 <script setup>
-  import { computed, defineProps } from 'vue'
-  import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
-  import { star, clock, comment, bookmark } from '@/assets/img'
-  import { formatTime } from '@/utils'
-  import store from '@/store'
-  import { MODAL_KEYS } from '@/utils/const'
-  import { RECIPES_ACTIONS } from '@/store/actions'
+  import { defineProps } from 'vue'
+  import RecipeMeta from '@/ui/RecipeMeta/RecipeMeta.vue'
+  import BookmarkRecipe from '@/components/BookmarkRecipe/BookmarkRecipe.vue'
 
-  const props = defineProps(['recipe'])
-
-  const user = computed(() => store.state.user)
-
-  const handleSaveClick = async () => {
-    // todo make `withAuth` hof to open login modal
-    if (!user.value.userData) {
-      store.commit('openModal', { modalName: MODAL_KEYS.LOGIN })
-      return
-    }
-    // todo add reactive changing of layout for bookmarks
-    await store.dispatch(RECIPES_ACTIONS.BOOKMARK_RECIPE, {
-      recipe: props.recipe.id,
-      is_bookmarked: !props.recipe.is_bookmarked,
-    })
-  }
+  defineProps(['recipe'])
 </script>
 
 <template>
@@ -36,20 +17,10 @@
       </p>
       <h4 class="recipe__title">{{ recipe.name }}</h4>
       <p class="recipe__author">Автор: {{ recipe.user.username }}</p>
-      <div class="recipe__meta">
-        <p class="recipe__metaItem">
-          <img class="recipe__metaImg" :src="star" /> Рейтинг:
-          {{ recipe.avg_rating ?? 0 }}
-        </p>
-        <p class="recipe__metaItem">Ингредиентов: {{ recipe.ingredients_count }}</p>
-        <p class="recipe__metaItem">
-          <img class="recipe__metaImg" :src="clock" />{{ formatTime(recipe.cooking_time) }}
-        </p>
-        <p class="recipe__metaItem"><img class="recipe__metaImg" :src="comment" />29</p>
-        <ButtonComponentVue type="lucid" class="recipe__bookmark" :onClick="handleSaveClick">
-          <img :src="bookmark" />
-          {{ recipe.is_bookmarked ? 'Сохранено' : 'Сохранить рецепт' }}
-        </ButtonComponentVue>
+      <RecipeMeta :recipe="recipe" />
+      <p class="recipe__description">{{ recipe.description }}</p>
+      <div>
+        <BookmarkRecipe :recipe="recipe" />
       </div>
     </div>
   </div>
@@ -93,24 +64,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-    &__meta {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-    &__metaItem {
-      display: flex;
-      align-items: center;
-    }
-    &__metaImg {
-      margin-right: 5px;
-    }
-    &__bookmark {
-      border: 1px solid var(--color-dark);
-      img {
-        margin-right: 10px;
-      }
     }
   }
 </style>

@@ -39,9 +39,7 @@
   <div class="register__container">
     <div class="register__toLogin">
       <h3>Уже есть аккаунт?</h3>
-      <ButtonComponent type="light" :onClick="openLoginModal">
-        Войти
-      </ButtonComponent>
+      <ButtonComponent type="light" :onClick="openLoginModal"> Войти </ButtonComponent>
     </div>
     <div class="register">
       <form class="register__form" @submit.prevent="onSubmit">
@@ -52,20 +50,14 @@
           type="email"
           :error="user.errors.email?.[0]"
         />
-        <InputComponent
-          v-model="formData.username"
-          placeholder="Имя пользователя"
-          :error="user.errors.username?.[0]"
-        />
+        <InputComponent v-model="formData.username" placeholder="Имя пользователя" :error="user.errors.username?.[0]" />
         <InputComponent
           v-model="formData.password"
           placeholder="Пароль"
           type="password"
           :error="user.errors.password?.[0]"
         />
-        <p class="register__passwordValidate">
-          Минимум 8 символов, включая цифры и спецсимволы (!, “, #, $ и т.д.)
-        </p>
+        <p class="register__passwordValidate">Минимум 8 символов, включая цифры и спецсимволы (!, “, #, $ и т.д.)</p>
         <InputComponent
           v-model="formData.confirm_password"
           placeholder="Подтвердите пароль"

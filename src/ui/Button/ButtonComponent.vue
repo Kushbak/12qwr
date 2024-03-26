@@ -6,6 +6,7 @@
 </script>
 
 <template>
+  <!-- todo remake props.onClick to emitter -->
   <button @click="props.onClick" :class="['button', btnTypeClass, props.class]" :disabled="props.disabled">
     <slot></slot>
     <span v-if="slots.icon" class="button__icon">

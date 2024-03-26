@@ -1,9 +1,10 @@
 <script setup>
   import { computed, onMounted, ref } from 'vue'
   import store from '@/store'
-  import { emptyAvatar, edit } from '@/assets/img'
+  import { edit } from '@/assets/img'
   import { RECIPES_ACTIONS } from '@/store/actions'
-  // import RecipeCard from '@/ui/RecipeCard/RecipeCard.vue'
+  import AvatarComponent from '@/ui/Avatar/AvatarComponent.vue'
+  import RecipeCard from '@/ui/RecipeCard/RecipeCard.vue'
   // todo split tabs to component
   const currentTab = ref(0)
   const userData = computed(() => store.state.user.userData)
@@ -39,7 +40,7 @@
 <template>
   <div class="profile">
     <div class="profile__data">
-      <img :src="userData.avatar || emptyAvatar" alt="avatar" />
+      <AvatarComponent :avatar="userData.avatar?.file" class="profile__avatar" />
       <div class="profile__info">
         <h3 class="profile__username">{{ userData.username }}</h3>
         <button class="profile__editBtn"><img :src="edit" alt="edit" />Редактировать профиль</button>
@@ -70,6 +71,11 @@
       display: flex;
       gap: 24px;
       margin-bottom: 24px;
+    }
+    &__avatar {
+      max-width: none;
+      max-height: none;
+      width: auto;
     }
     &__username {
       font-size: 32px;

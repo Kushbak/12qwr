@@ -39,18 +39,10 @@
     <router-link to="/">
       <h2 class="header__logo">Мои рецепты</h2>
     </router-link>
-    <InputComponent
-      class="header__search"
-      placeholder="Поиск"
-      @input="onChange"
-    />
+    <InputComponent class="header__search" placeholder="Поиск" @input="onChange" />
     <div class="header__btns">
       <ButtonComponent>Добавить рецепт</ButtonComponent>
-      <ButtonComponent
-        v-if="user.userData"
-        type="lucid"
-        :onClick="handleProfileClick"
-      >
+      <ButtonComponent v-if="user.userData" type="lucid" :onClick="handleProfileClick">
         Профиль
         <template #icon>
           <img :src="isProfileDropdownOpen ? arrowTop : arrowBottom" />
@@ -63,16 +55,9 @@
         </template>
       </ButtonComponent>
       <!-- split dropdowns to component -->
-      <div
-        class="header__dropdown"
-        v-if="isProfileDropdownOpen && user.userData"
-      >
-        <ButtonComponent type="lucid" :onClick="navigateToProfile">
-          Перейти в профиль
-        </ButtonComponent>
-        <ButtonComponent type="lucid" class="header__logout" :onClick="logout">
-          Выйти
-        </ButtonComponent>
+      <div class="header__dropdown" v-if="isProfileDropdownOpen && user.userData">
+        <ButtonComponent type="lucid" :onClick="navigateToProfile"> Перейти в профиль </ButtonComponent>
+        <ButtonComponent type="lucid" class="header__logout" :onClick="logout"> Выйти </ButtonComponent>
       </div>
     </div>
   </header>
