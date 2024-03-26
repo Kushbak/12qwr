@@ -9,6 +9,7 @@ export const RECIPES_ACTIONS = {
   GET_ALL_CATEGORIES: 'getAllCategories',
   BOOKMARK_RECIPE: 'bookmarkRecipe',
   GET_RECIPE_BY_ID: 'getRecipeById',
+  ADD_COMMENT_TO_RECIPE: 'addCommentToRecipe',
 }
 
 export const USER_ACTIONS = {

@@ -17,6 +17,22 @@ export const formatTime = (timeString) => {
   return formattedTime.trim()
 }
 
+export const formatCommentDate = (dateString) => {
+  const date = new Date(dateString)
+
+  // Get day, month, year, hours, and minutes
+  const day = date.getDate().toString().padStart(2, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const year = date.getFullYear()
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+
+  // Format the date
+  const formattedDate = `${day}.${month}.${year} в ${hours}:${minutes}`
+
+  return formattedDate
+}
+
 export const getInitialFilters = () => {
   return {
     category: null,

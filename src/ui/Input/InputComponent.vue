@@ -2,13 +2,7 @@
   import { ERROR_MESSAGES } from '@/utils/const'
   import { defineModel, defineProps } from 'vue'
 
-  const props = defineProps([
-    'class',
-    'placeholder',
-    'onChange',
-    'type',
-    'error',
-  ])
+  const props = defineProps(['class', 'placeholder', 'onChange', 'type', 'error'])
   const modelValue = defineModel()
 </script>
 

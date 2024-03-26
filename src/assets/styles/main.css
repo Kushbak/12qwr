@@ -30,6 +30,7 @@ button, a, input {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 .error {

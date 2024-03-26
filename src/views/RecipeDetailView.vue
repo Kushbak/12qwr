@@ -1,10 +1,10 @@
 <script setup>
-  import { computed, onMounted } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import store from '@/store'
   import { RECIPES_ACTIONS } from '@/store/actions'
   import { useRoute } from 'vue-router'
-  import { formatTime } from '@/utils'
-  import { bookmark, clock, comment, emptyAvatar, star } from '@/assets/img'
+  import { formatCommentDate, formatTime } from '@/utils'
+  import { bookmark, clock, comment, emptyAvatar, star, starEmpty } from '@/assets/img'
   import { MODAL_KEYS } from '@/utils/const'
   import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
@@ -12,6 +12,7 @@
   const route = useRoute()
   const recipe = computed(() => store.state.recipes.recipeDetails)
   const user = computed(() => store.state.user)
+  const commentInput = ref('')
 
   const handleSaveClick = async () => {
     // todo make `withAuth` hof to open login modal
@@ -24,6 +25,14 @@
       recipe: recipe.value.id,
       is_bookmarked: !recipe.value.is_bookmarked,
     })
+  }
+
+  const addComment = () => {
+    if (!user.value.userData) {
+      store.commit('openModal', { modalName: MODAL_KEYS.LOGIN })
+      return
+    }
+    store.dispatch(RECIPES_ACTIONS.ADD_COMMENT_TO_RECIPE, { text: commentInput.value, recipe: recipe.value.id })
   }
 
   onMounted(() => {
@@ -59,7 +68,7 @@
     <div class="recipe__ingredients">
       <h4 class="recipe__subtitle">Ингредиенты: {{ recipe.ingredients_count }}</h4>
       <ul>
-        <li v-for="ingredient of recipe.ingredients" :key="ingredient.id">
+        <li v-for="ingredient of recipe.ingredients" :key="ingredient.id" class="recipe__ingredient">
           {{ ingredient.name }} - {{ ingredient.amount }}
         </li>
       </ul>
@@ -72,11 +81,12 @@
       <div class="recipe__rate">
         <p>Оцените рецепт, если опробовали его:</p>
         <div class="recipe__myRate">
-          <img :src="star" alt="" />
-          <img :src="star" alt="" />
-          <img :src="star" alt="" />
-          <img :src="star" alt="" />
-          <img :src="star" alt="" />
+          <!-- to rate component -->
+          <img :src="starEmpty" alt="" />
+          <img :src="starEmpty" alt="" />
+          <img :src="starEmpty" alt="" />
+          <img :src="starEmpty" alt="" />
+          <img :src="starEmpty" alt="" />
           <p>Ваша оценка</p>
         </div>
       </div>
@@ -91,20 +101,22 @@
     </div>
     <div class="recipe__comments">
       <h4 class="recipe__subtitle">Комментарии({{ recipe.comments_count }})</h4>
-      <div class="comment" v-for="comment of recipe.comments" :key="comment.id">
+      <div class="comment" v-for="commentData of recipe.comments" :key="commentData.id">
         <div class="comment__author">
           <!-- todo split avatar to component -->
-          <img :src="comment.user.avatar.file || emptyAvatar" alt="avatar" class="comment__avatar" />
+          <img :src="commentData.user.avatar?.file || emptyAvatar" alt="avatar" class="comment__avatar" />
           <div class="comment__meta">
-            <p class="comment__authorName">{{ comment.user.username }}</p>
-            <p class="comment__date">{{ comment.created_at }}</p>
+            <p class="comment__authorName">{{ commentData.user.username }}</p>
+            <p class="comment__date">{{ formatCommentDate(commentData.created_at) }}</p>
           </div>
         </div>
-        <p class="comment__text">{{ comment.text }}</p>
+        <p class="comment__text">{{ commentData.text }}</p>
       </div>
       <div class="comment__inputBlock">
-        <InputComponent class="comment__input" placeholder="Добавить комментарий" />
-        <ButtonComponentVue>Отправить</ButtonComponentVue>
+        <InputComponent class="comment__input" placeholder="Добавить комментарий" v-model="commentInput" />
+        <ButtonComponentVue :disabled="commentInput.trim().length === 0" :onClick="addComment">
+          Отправить
+        </ButtonComponentVue>
       </div>
     </div>
   </div>
@@ -149,6 +161,7 @@
       margin: 32px 0;
       white-space: pre-wrap;
       font-family: inherit;
+      line-height: 24px;
     }
     &__meta {
       display: flex;
@@ -178,10 +191,11 @@
     }
     &__ingredients {
       width: 100%;
-      li {
-        margin-bottom: 8px;
-        font-size: 16px;
-      }
+    }
+    &__ingredient {
+      margin-bottom: 8px;
+      padding: 4px 0;
+      font-size: 16px;
     }
     &__rating {
       padding: 32px 0;
@@ -194,6 +208,7 @@
     }
     &__myRate {
       display: flex;
+      align-items: center;
       margin-top: 8px;
       gap: 4px;
     }
@@ -212,6 +227,26 @@
   }
 
   .comment {
+    margin-bottom: 12px;
+    &__author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    &__avatar {
+      width: 32px;
+      height: 32px;
+    }
+    &__authorName {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    &__date {
+      font-size: 14px;
+      color: var(--color-grey);
+    }
     &__inputBlock {
       display: flex;
       gap: 16px;

@@ -9,6 +9,7 @@ import emptyAvatar from './empty-avatar.png'
 import image from './icons/image.svg'
 import play from './icons/play.svg'
 import star from './icons/star.svg'
+import starEmpty from './icons/star-empty.svg'
 import trash from './icons/trash.svg'
 import triangleBottom from './icons/triangle-bottom.svg'
 import video from './icons/video.svg'
@@ -30,6 +31,7 @@ export {
   image,
   play,
   star,
+  starEmpty,
   trash,
   triangleBottom,
   video,

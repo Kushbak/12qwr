@@ -63,6 +63,11 @@ export default {
     setRecipeDetails(state, recipe) {
       state.recipeDetails = recipe
     },
+    addCommentToRecipeDetail(state, comment) {
+      if (state.recipeDetails) {
+        state.recipeDetails.comments.push(comment)
+      }
+    },
   },
   actions: {
     async getAllRecipes({ state, commit }) {
@@ -118,6 +123,10 @@ export default {
       const res = await recipesApi.getRecipeById(recipeId)
 
       commit('setRecipeDetails', res.data)
+    },
+    async addCommentToRecipe({ commit }, data) {
+      const res = await recipesApi.addComment(data)
+      commit('addCommentToRecipeDetail', res.data)
     },
   },
 }
