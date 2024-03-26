@@ -5,11 +5,12 @@
   --color-main-dark: #F47F2B;
   --color-main-darker: #D96A19;
   --color-dark: #4B4242;
-  --color-white: #FFFFFF;
   --color-black: #000000;
-  --color-white-almost: #F1F1F1;
-  --color-grey: #7C7575;
+  --color-white: #FFFFFF;
+  --color-white-1: #F1F1F1;
+  --color-white-2: #EAEAEA;
   --color-grey-light: #BFBEBE;
+  --color-grey: #7C7575;
   --color-error: #E44C4C;
 }
 

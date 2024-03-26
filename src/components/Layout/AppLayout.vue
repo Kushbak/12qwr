@@ -6,7 +6,6 @@
 
 <style lang="scss">
   .container {
-    max-width: 1440px;
     width: 100%;
     margin: 0 auto;
     @media (min-width: 576px) {
@@ -22,7 +21,7 @@
       max-width: 1140px;
     }
     @media (min-width: 1700px) {
-      max-width: 1440px;
+      max-width: 1240px;
     }
   }
 </style>

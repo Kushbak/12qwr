@@ -6,11 +6,7 @@
 </script>
 
 <template>
-  <button
-    @click="props.onClick"
-    :class="['button', btnTypeClass, props.class]"
-    :disabled="props.disabled"
-  >
+  <button @click="props.onClick" :class="['button', btnTypeClass, props.class]" :disabled="props.disabled">
     <slot></slot>
     <span v-if="slots.icon" class="button__icon">
       <slot name="icon"></slot>
@@ -40,7 +36,7 @@
         color: var(--color-grey);
       }
       &:active {
-        background-color: var(--color-white-almost);
+        background-color: var(--color-white-1);
         color: var(--color-dark);
       }
       &:disabled {
