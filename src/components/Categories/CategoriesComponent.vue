@@ -65,14 +65,14 @@
       v-for="(category, index) of categories"
       :key="category"
       :class="['categories__item', allCategories[activeCategory] === category && 'categories__item_active']"
-      :onClick="() => onCategoryClick(index)"
+      @click="() => onCategoryClick(index)"
     >
       {{ category?.name }}
     </ButtonComponent>
     <ButtonComponent
       class="categories__item"
       type="lucid"
-      :onClick="onMoreCategoriesClick"
+      @click="onMoreCategoriesClick"
       v-if="hiddenCategories.length"
     >
       Еще
@@ -86,7 +86,7 @@
         v-for="(category, index) of hiddenCategories"
         :key="category"
         class="categories__dropdownItem"
-        :onClick="() => onCategoryClick(categories.length + index)"
+        @click="() => onCategoryClick(categories.length + index)"
       >
         {{ category?.name }}
       </ButtonComponent>

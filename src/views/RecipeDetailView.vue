@@ -86,7 +86,7 @@
       </div>
       <div class="comment__inputBlock">
         <InputComponent class="comment__input" placeholder="Добавить комментарий" v-model="commentInput" />
-        <ButtonComponentVue :disabled="commentInput.trim().length === 0" :onClick="addComment">
+        <ButtonComponentVue :disabled="commentInput.trim().length === 0" @click="addComment">
           Отправить
         </ButtonComponentVue>
       </div>

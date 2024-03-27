@@ -35,22 +35,13 @@
     <div class="login">
       <form class="login__form" @submit.prevent="onSubmit">
         <h3 class="login__title">Вход</h3>
-        <InputComponent
-          v-model="formData.email"
-          placeholder="Адрес электронной почты"
-        />
-        <InputComponent
-          v-model="formData.password"
-          placeholder="Пароль"
-          type="password"
-        />
+        <InputComponent v-model="formData.email" placeholder="Адрес электронной почты" />
+        <InputComponent v-model="formData.password" placeholder="Пароль" type="password" />
         <p class="error" v-if="user.errors">
           {{ ERROR_MESSAGES[user.errors.detail] }}
         </p>
         <div class="login__forgotPassBlock">
-          <ButtonComponent class="login__forgotPass" type="lucid">
-            Забыли пароль?
-          </ButtonComponent>
+          <ButtonComponent class="login__forgotPass" type="lucid"> Забыли пароль? </ButtonComponent>
         </div>
         <ButtonComponent :disabled="user.isLoading">
           {{ user.isLoading ? 'Вход...' : 'Войти' }}
@@ -60,9 +51,7 @@
     </div>
     <div class="login__toRegister">
       <h3>Еще нет аккаунта?</h3>
-      <ButtonComponent type="light" :onClick="openRegisterModal">
-        Зарегистрироваться
-      </ButtonComponent>
+      <ButtonComponent type="light" @click="openRegisterModal"> Зарегистрироваться </ButtonComponent>
     </div>
   </div>
 </template>

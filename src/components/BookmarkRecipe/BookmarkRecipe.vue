@@ -18,7 +18,7 @@
 </script>
 
 <template>
-  <ButtonComponentVue type="lucid" class="bookmarkBtn" :onClick="handleSaveClick">
+  <ButtonComponentVue type="lucid" class="bookmarkBtn" @click="handleSaveClick">
     <img :src="bookmark" />
     {{ props.recipe.is_bookmarked ? 'Сохранено' : 'Сохранить рецепт' }}
   </ButtonComponentVue>

@@ -37,7 +37,7 @@
           recipes.filters.ordering === ORDER_BY.AVG_RATING_DESC && 'recipesList__sortBtn_active',
         ]"
         type="lucid"
-        :onClick="() => onOrderingClick(ORDER_BY.AVG_RATING_DESC)"
+        @click="() => onOrderingClick(ORDER_BY.AVG_RATING_DESC)"
       >
         по рейтингу
       </ButtonComponentVue>
@@ -47,7 +47,7 @@
           recipes.filters.ordering === ORDER_BY.COMMENTS_COUNT_DESC && 'recipesList__sortBtn_active',
         ]"
         type="lucid"
-        :onClick="() => onOrderingClick(ORDER_BY.COMMENTS_COUNT_DESC)"
+        @click="() => onOrderingClick(ORDER_BY.COMMENTS_COUNT_DESC)"
       >
         по кол-ву комментариев
       </ButtonComponentVue>

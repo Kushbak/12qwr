@@ -1,13 +1,18 @@
 <script setup>
-  import { defineProps, useSlots } from 'vue'
+  import { defineProps, defineEmits, useSlots } from 'vue'
   const slots = useSlots()
   const props = defineProps(['onClick', 'class', 'disabled', 'type'])
+  const emit = defineEmits(['click'])
   const btnTypeClass = 'button_' + (props.type || 'default')
+
+  const handleClick = () => {
+    emit('click')
+  }
 </script>
 
 <template>
   <!-- todo remake props.onClick to emitter -->
-  <button @click="props.onClick" :class="['button', btnTypeClass, props.class]" :disabled="props.disabled">
+  <button @click.stop="handleClick" :class="['button', btnTypeClass, props.class]" :disabled="props.disabled">
     <slot></slot>
     <span v-if="slots.icon" class="button__icon">
       <slot name="icon"></slot>

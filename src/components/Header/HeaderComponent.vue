@@ -42,13 +42,13 @@
     <InputComponent class="header__search" placeholder="Поиск" @input="onChange" />
     <div class="header__btns">
       <ButtonComponent>Добавить рецепт</ButtonComponent>
-      <ButtonComponent v-if="user.userData" type="lucid" :onClick="handleProfileClick">
+      <ButtonComponent v-if="user.userData" type="lucid" @click="handleProfileClick">
         Профиль
         <template #icon>
           <img :src="isProfileDropdownOpen ? arrowTop : arrowBottom" />
         </template>
       </ButtonComponent>
-      <ButtonComponent v-else type="lucid" :onClick="handleOpenLoginModal">
+      <ButtonComponent v-else type="lucid" @click="handleOpenLoginModal">
         Вход/Регистрация
         <template #icon>
           <img :src="arrowBottom" />
@@ -56,8 +56,8 @@
       </ButtonComponent>
       <!-- split dropdowns to component -->
       <div class="header__dropdown" v-if="isProfileDropdownOpen && user.userData">
-        <ButtonComponent type="lucid" :onClick="navigateToProfile"> Перейти в профиль </ButtonComponent>
-        <ButtonComponent type="lucid" class="header__logout" :onClick="logout"> Выйти </ButtonComponent>
+        <ButtonComponent type="lucid" @click="navigateToProfile"> Перейти в профиль </ButtonComponent>
+        <ButtonComponent type="lucid" class="header__logout" @click="logout"> Выйти </ButtonComponent>
       </div>
     </div>
   </header>
