@@ -26,7 +26,7 @@
   }
 
   const navigateToProfile = () => {
-    router.push('profile')
+    router.push('/profile/')
   }
 
   const logout = () => {
@@ -54,7 +54,7 @@
           <img :src="arrowBottom" />
         </template>
       </ButtonComponent>
-      <!-- split dropdowns to component -->
+      <!-- todo split dropdowns to component -->
       <div class="header__dropdown" v-if="isProfileDropdownOpen && user.userData">
         <ButtonComponent type="lucid" @click="navigateToProfile"> Перейти в профиль </ButtonComponent>
         <ButtonComponent type="lucid" class="header__logout" @click="logout"> Выйти </ButtonComponent>

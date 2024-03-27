@@ -1,6 +1,7 @@
 import MainViewVue from '@/views/MainView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import RecipeDetailView from '@/views/RecipeDetailView.vue'
+import UserProfileView from '@/views/UserProfileView.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
@@ -21,6 +22,11 @@ const routes = [
     path: '/recipe/:id',
     name: 'Recipe Details',
     component: RecipeDetailView,
+  },
+  {
+    path: '/users/:id',
+    name: 'User Details',
+    component: UserProfileView,
   },
 ]
 

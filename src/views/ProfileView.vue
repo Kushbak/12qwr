@@ -8,13 +8,12 @@
   // todo split tabs to component
   const currentTab = ref(0)
   const userData = computed(() => store.state.user.userData)
-  const data = computed(
-    () =>
-      ({
-        0: store.state.recipes.myRecipes,
-        1: store.state.recipes.myBookmarks,
-      }[currentTab.value]),
-  )
+  const data = computed(() => {
+    return {
+      0: store.state.recipes.myRecipes,
+      1: store.state.recipes.myBookmarks,
+    }[currentTab.value]
+  })
 
   const onTabClick = (tab) => {
     currentTab.value = tab
@@ -34,7 +33,6 @@
       store.dispatch(RECIPES_ACTIONS.GET_MY_RECIPES)
     }
   })
-  console.log({ onTabClick })
 </script>
 
 <template>

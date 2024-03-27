@@ -1,28 +1,27 @@
 <script setup>
-  import { computed, onMounted, ref } from 'vue'
+  import { computed, onMounted } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
   import store from '@/store'
   import { RECIPES_ACTIONS } from '@/store/actions'
-  import { useRoute } from 'vue-router'
-  import { formatCommentDate } from '@/utils'
-  import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
-  import InputComponent from '@/ui/Input/InputComponent.vue'
+  import { star } from '@/assets/img'
   import AvatarComponent from '@/ui/Avatar/AvatarComponent.vue'
   import RateComponent from '@/ui/Rate/RateComponent.vue'
   import { withAuth } from '@/utils/hofs'
   import RecipeMeta from '@/ui/RecipeMeta/RecipeMeta.vue'
+  import CommentsBlock from '@/components/CommentsBlock/CommentsBlock.vue'
 
   const route = useRoute()
+  const router = useRouter()
   const recipe = computed(() => store.state.recipes.recipeDetails)
-  const commentInput = ref('')
-
-  const addComment = withAuth(async () => {
-    await store.dispatch(RECIPES_ACTIONS.ADD_COMMENT_TO_RECIPE, { text: commentInput.value, recipe: recipe.value.id })
-    commentInput.value = ''
-  })
 
   const onRate = withAuth(async (rate) => {
     await store.dispatch(RECIPES_ACTIONS.RATE_RECIPE, { recipe: recipe.value.id, rate_number: rate })
   })
+
+  const navigateToAuthorPage = () => {
+    store.commit('setUserData', recipe.value.user)
+    router.push('/users/' + recipe.value.user.id)
+  }
 
   onMounted(() => {
     store.dispatch(RECIPES_ACTIONS.GET_RECIPE_BY_ID, route.params.id)
@@ -33,7 +32,7 @@
   <div v-if="recipe" class="recipe">
     <div class="recipe__category">{{ recipe.category.name }}</div>
     <div class="recipe__title">{{ recipe.name }}</div>
-    <div class="recipe__author">
+    <div class="recipe__author" @click="navigateToAuthorPage">
       <AvatarComponent :avatar="recipe.user.avatar?.file" />
       {{ recipe.user.username }}
     </div>
@@ -72,22 +71,7 @@
     </div>
     <div class="recipe__comments">
       <h4 class="recipe__subtitle">Комментарии({{ recipe.comments_count }})</h4>
-      <div class="comment" v-for="commentData of recipe.comments" :key="commentData.id">
-        <div class="comment__author">
-          <AvatarComponent :avatar="commentData.user.avatar?.file" />
-          <div class="comment__meta">
-            <p class="comment__authorName">{{ commentData.user.username }}</p>
-            <p class="comment__date">{{ formatCommentDate(commentData.created_at) }}</p>
-          </div>
-        </div>
-        <p class="comment__text">{{ commentData.text }}</p>
-      </div>
-      <div class="comment__inputBlock">
-        <InputComponent class="comment__input" placeholder="Добавить комментарий" v-model="commentInput" />
-        <ButtonComponentVue :disabled="commentInput.trim().length === 0" @click="addComment">
-          Отправить
-        </ButtonComponentVue>
-      </div>
+      <CommentsBlock :comments="recipe.comments" :recipeId="recipe.id" />
     </div>
   </div>
   <p v-else>Loading...</p>
@@ -169,35 +153,6 @@
     &__comments {
       width: 100%;
       margin-bottom: 120px;
-    }
-  }
-
-  .comment {
-    margin-bottom: 12px;
-    &__author {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 4px;
-    }
-    &__authorName {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    &__date {
-      font-size: 14px;
-      color: var(--color-grey);
-    }
-    &__inputBlock {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      margin-top: 36px;
-    }
-    &__input {
-      margin-bottom: 0;
-      width: 100%;
     }
   }
 </style>
