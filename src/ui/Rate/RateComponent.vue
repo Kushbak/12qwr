@@ -1,5 +1,5 @@
 <script setup>
-  import { defineProps, ref } from 'vue'
+  import { defineProps, ref, watch } from 'vue'
   import { star, starEmpty } from '@/assets/img'
 
   const props = defineProps({
@@ -21,9 +21,16 @@
   const onRateClick = (e) => {
     const rate = +e.target.dataset.id
     if (rate !== props.currentRate) {
-      props.handleRate()
+      props.handleRate(rate)
     }
   }
+
+  watch(
+    () => props.currentRate,
+    () => {
+      hoveredStar.value = props.currentRate
+    },
+  )
 </script>
 
 <template>
@@ -46,6 +53,7 @@
     display: flex;
     align-items: center;
     &__img {
+      cursor: pointer;
       width: 20px;
       height: 20px;
     }
