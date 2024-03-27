@@ -1,6 +1,7 @@
 import { recipesApi } from '@/api'
 import { formatFilters, getInitialFilters } from '@/utils'
 import store from '..'
+import { RECIPES_ACTIONS } from '../actions'
 
 export default {
   state: {
@@ -127,6 +128,10 @@ export default {
     async addCommentToRecipe({ commit }, data) {
       const res = await recipesApi.addComment(data)
       commit('addCommentToRecipeDetail', res.data)
+    },
+    async rateRecipe({ dispatch, state }, data) {
+      await recipesApi.addRate(data)
+      dispatch(RECIPES_ACTIONS.GET_RECIPE_BY_ID, state.recipeDetails.id)
     },
   },
 }

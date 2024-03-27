@@ -36,7 +36,7 @@ export const recipesApi = {
   createRecipe: async (data) => instance.post('recipe/', data),
   addBookmark: async (data) => instance.post('recipe/bookmarks/', data),
   addComment: async (data) => instance.post('recipe/comments', data),
-  addRate: async (data) => instance.post('recipe/rates/', data),
+  addRate: async (data) => instance.post('recipe/rates', data),
   changeRecipe: async (recipeId, data) => instance.put(`recipe/${recipeId}/`, data),
   deleteRecipe: async (recipeId) => instance.delete(`recipe/${recipeId}`),
 }

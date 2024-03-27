@@ -10,6 +10,7 @@ export const RECIPES_ACTIONS = {
   BOOKMARK_RECIPE: 'bookmarkRecipe',
   GET_RECIPE_BY_ID: 'getRecipeById',
   ADD_COMMENT_TO_RECIPE: 'addCommentToRecipe',
+  RATE_RECIPE: 'rateRecipe',
 }
 
 export const USER_ACTIONS = {

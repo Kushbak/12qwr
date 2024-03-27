@@ -4,10 +4,10 @@
   import { RECIPES_ACTIONS } from '@/store/actions'
   import { useRoute } from 'vue-router'
   import { formatCommentDate } from '@/utils'
-  import { star, starEmpty } from '@/assets/img'
   import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
   import AvatarComponent from '@/ui/Avatar/AvatarComponent.vue'
+  import RateComponent from '@/ui/Rate/RateComponent.vue'
   import { withAuth } from '@/utils/hofs'
   import RecipeMeta from '@/ui/RecipeMeta/RecipeMeta.vue'
 
@@ -18,6 +18,10 @@
   const addComment = withAuth(async () => {
     await store.dispatch(RECIPES_ACTIONS.ADD_COMMENT_TO_RECIPE, { text: commentInput.value, recipe: recipe.value.id })
     commentInput.value = ''
+  })
+
+  const onRate = withAuth(async (rate) => {
+    await store.dispatch(RECIPES_ACTIONS.RATE_RECIPE, { recipe: recipe.value.id, rate_number: rate })
   })
 
   onMounted(() => {
@@ -53,12 +57,7 @@
       <div class="recipe__rate">
         <p>Оцените рецепт, если опробовали его:</p>
         <div class="recipe__myRate">
-          <!-- to rate component -->
-          <img :src="starEmpty" alt="" />
-          <img :src="starEmpty" alt="" />
-          <img :src="starEmpty" alt="" />
-          <img :src="starEmpty" alt="" />
-          <img :src="starEmpty" alt="" />
+          <RateComponent :currentRate="recipe.user_rate_number" :handleRate="onRate" />
           <p>Ваша оценка</p>
         </div>
       </div>
@@ -75,7 +74,6 @@
       <h4 class="recipe__subtitle">Комментарии({{ recipe.comments_count }})</h4>
       <div class="comment" v-for="commentData of recipe.comments" :key="commentData.id">
         <div class="comment__author">
-          <!-- todo split avatar to component -->
           <AvatarComponent :avatar="commentData.user.avatar?.file" />
           <div class="comment__meta">
             <p class="comment__authorName">{{ commentData.user.username }}</p>
