@@ -147,3 +147,14 @@ export const getTokenExpirationInSeconds = (token) => {
   const decoded = jwtDecode(token)
   return decoded.exp - decoded.iat
 }
+
+export const saveTokens = (data) => {
+  if (data.access) {
+    const accessExp = getTokenExpirationInSeconds(data.access)
+    setCookie(process.env.VUE_APP_CBAT, data.access, accessExp)
+  }
+  if (data.refresh) {
+    const refreshExp = getTokenExpirationInSeconds(data.refresh)
+    setCookie(process.env.VUE_APP_CBRT, data.refresh, refreshExp)
+  }
+}

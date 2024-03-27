@@ -1,5 +1,5 @@
 import { usersApi } from '@/api'
-import { getTokenExpirationInSeconds, removeCookie, setCookie } from '@/utils'
+import { removeCookie, saveTokens } from '@/utils'
 import { USER_ACTIONS } from '../actions'
 
 export default {
@@ -39,10 +39,7 @@ export default {
       commit('setErrors', {})
       try {
         const res = await usersApi.login(userData)
-        const accessExp = getTokenExpirationInSeconds(res.data.access)
-        const refreshExp = getTokenExpirationInSeconds(res.data.refresh)
-        setCookie(process.env.VUE_APP_CBAT, res.data.access, accessExp)
-        setCookie(process.env.VUE_APP_CBRT, res.data.refresh, refreshExp)
+        saveTokens(res.data)
         dispatch(USER_ACTIONS.GET_PROFILE)
       } catch (e) {
         commit('setErrors', e.response.data.errors || e.response.data)

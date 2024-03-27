@@ -67,6 +67,7 @@ export default {
     addCommentToRecipeDetail(state, comment) {
       if (state.recipeDetails) {
         state.recipeDetails.comments.push(comment)
+        state.recipeDetails.comments_count++
       }
     },
   },
