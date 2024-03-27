@@ -19,7 +19,10 @@
   }
 
   const onRateClick = (e) => {
-    props.handleRate(+e.target.dataset.id)
+    const rate = +e.target.dataset.id
+    if (rate !== props.currentRate) {
+      props.handleRate()
+    }
   }
 </script>
 
