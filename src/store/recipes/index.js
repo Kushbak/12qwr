@@ -114,16 +114,6 @@ export default {
 
       commit('setMyBookmarks', res.data)
     },
-    async [RECIPES_ACTIONS.GET_MY_RECIPES]({ commit, rootState }) {
-      const res = await recipesApi.getRecipesByUserId(rootState.user.userData.id, { limit: 50 })
-
-      commit('setMyRecipes', res.data)
-    },
-    async [RECIPES_ACTIONS.GET_RECIPES_BY_USER_ID]({ commit }, userId) {
-      const res = await recipesApi.getRecipesByUserId(userId, { limit: 50 })
-
-      commit('setUserRecipes', res.data)
-    },
     async [RECIPES_ACTIONS.BOOKMARK_RECIPE](context, data) {
       const res = await recipesApi.addBookmark(data)
       console.log({ res })

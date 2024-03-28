@@ -1,20 +1,20 @@
 import { usersApi } from '@/api'
-import { removeCookie, saveTokens } from '@/utils'
+import { getCookie, jwtDecode, removeCookie, saveTokens } from '@/utils'
 import { USER_ACTIONS } from '../actions'
 
 export default {
   state: {
-    userData: null,
+    profile: null,
     errors: {},
     isLoading: false,
   },
   getters: {},
   mutations: {
     setUserData(state, userData) {
-      state.userData = userData
+      state.profile = userData
     },
     logout(state) {
-      state.userData = null
+      state.profile = null
       removeCookie(process.env.VUE_APP_CBAT)
       removeCookie(process.env.VUE_APP_CBRT)
     },
@@ -26,10 +26,22 @@ export default {
     },
   },
   actions: {
-    async getProfile({ commit }) {
+    async [USER_ACTIONS.GET_USER_BY_ID]({ commit }, userId) {
       try {
-        const res = await usersApi.getProfile()
+        const res = await usersApi.getUserById(userId)
         commit('setUserData', res.data)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async [USER_ACTIONS.GET_PROFILE]({ commit }) {
+      try {
+        const cookie = getCookie(process.env.VUE_APP_CBAT)
+        const decoded = jwtDecode(cookie)
+        if (decoded) {
+          const res = await usersApi.getUserById(decoded.user_id)
+          commit('setUserData', res.data)
+        }
       } catch (e) {
         console.log(e)
       }

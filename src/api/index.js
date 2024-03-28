@@ -22,7 +22,8 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
     const refresh = getCookie(process.env.VUE_APP_CBRT)
-    if (error.response.status === 401 && refresh) {
+    if (error.response.status === 401 && !originalRequest._retry && refresh) {
+      originalRequest._retry = true
       const res = await usersApi.refresh({ refresh })
       saveTokens(res.data)
       instance(originalRequest)
@@ -36,7 +37,6 @@ export const recipesApi = {
   getMyBookmarks: async (params) => instance.get('recipe/bookmarks/', { params }),
   getAllCategories: async (params) => instance.get('recipe/categories/', { params }),
   getAllRecipes: async (params) => instance.get('recipe/feed/', { params }),
-  getRecipesByUserId: async (userId, params) => instance.get(`recipe/user/${userId}/recipes/`, { params }),
   getRecipeById: async (recipeId) => instance.get(`recipe/${recipeId}/`),
   createRecipe: async (data) => instance.post('recipe/', data),
   addBookmark: async (data) => instance.post('recipe/bookmarks/', data),
@@ -49,6 +49,6 @@ export const recipesApi = {
 export const usersApi = {
   login: async (data) => instance.post('users/login/', data),
   register: async (data) => instance.post('users/register/', data),
-  getProfile: async () => instance.get('users/profile/me/'),
   refresh: async (data) => instance.post('users/login/refresh/', data),
+  getUserById: async (userId) => instance.get(`users/${userId}/`),
 }

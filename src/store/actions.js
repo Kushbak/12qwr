@@ -4,8 +4,6 @@ export const RECIPES_ACTIONS = {
   GET_RECIPES_BY_CATEGORY: 'getRecipesByCategory',
   GET_ORDERED_RECIPES: 'getOrderedRecipes',
   GET_MY_BOOKMARKS: 'getMyBookmarks',
-  GET_MY_RECIPES: 'getMyRecipes',
-  GET_RECIPES_BY_USER_ID: 'getRecipesByUserId',
   GET_ALL_CATEGORIES: 'getAllCategories',
   BOOKMARK_RECIPE: 'bookmarkRecipe',
   GET_RECIPE_BY_ID: 'getRecipeById',
@@ -16,5 +14,6 @@ export const RECIPES_ACTIONS = {
 export const USER_ACTIONS = {
   LOGIN: 'login',
   REGISTER: 'register',
+  GET_USER_BY_ID: 'getUserById',
   GET_PROFILE: 'getProfile',
 }

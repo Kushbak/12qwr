@@ -42,7 +42,7 @@
     <InputComponent class="header__search" placeholder="Поиск" @input="onChange" />
     <div class="header__btns">
       <ButtonComponent>Добавить рецепт</ButtonComponent>
-      <ButtonComponent v-if="user.userData" type="lucid" @click="handleProfileClick">
+      <ButtonComponent v-if="user.profile" type="lucid" @click="handleProfileClick">
         Профиль
         <template #icon>
           <img :src="isProfileDropdownOpen ? arrowTop : arrowBottom" />
@@ -55,7 +55,7 @@
         </template>
       </ButtonComponent>
       <!-- todo split dropdowns to component -->
-      <div class="header__dropdown" v-if="isProfileDropdownOpen && user.userData">
+      <div class="header__dropdown" v-if="isProfileDropdownOpen && user.profile">
         <ButtonComponent type="lucid" @click="navigateToProfile"> Перейти в профиль </ButtonComponent>
         <ButtonComponent type="lucid" class="header__logout" @click="logout"> Выйти </ButtonComponent>
       </div>

@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, onMounted, ref } from 'vue'
+  import { computed, ref } from 'vue'
   import store from '@/store'
   import { edit } from '@/assets/img'
   import { RECIPES_ACTIONS } from '@/store/actions'
@@ -7,10 +7,10 @@
   import RecipeCard from '@/ui/RecipeCard/RecipeCard.vue'
   // todo split tabs to component
   const currentTab = ref(0)
-  const userData = computed(() => store.state.user.userData)
+  const userData = computed(() => store.state.user.profile)
   const data = computed(() => {
     return {
-      0: store.state.recipes.myRecipes,
+      0: store.state.user.profile.recipes,
       1: store.state.recipes.myBookmarks,
     }[currentTab.value]
   })
@@ -18,21 +18,11 @@
   const onTabClick = (tab) => {
     currentTab.value = tab
     if (data.value.length) return
-    if (tab === 0) {
-      store.dispatch(RECIPES_ACTIONS.GET_MY_RECIPES)
-      return
-    }
     if (tab === 1) {
       store.dispatch(RECIPES_ACTIONS.GET_MY_BOOKMARKS)
       return
     }
   }
-
-  onMounted(() => {
-    if (!store.state.recipes.myRecipes.length) {
-      store.dispatch(RECIPES_ACTIONS.GET_MY_RECIPES)
-    }
-  })
 </script>
 
 <template>

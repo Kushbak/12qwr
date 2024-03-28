@@ -27,7 +27,6 @@
     store.dispatch(RECIPES_ACTIONS.GET_RECIPE_BY_ID, route.params.id)
   })
 </script>
-<!-- todo refactor layout -->
 <template>
   <div v-if="recipe" class="recipe">
     <div class="recipe__category">{{ recipe.category.name }}</div>
