@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
-import { getCookie, saveTokens } from '@/utils'
+import { getCookie } from '@/utils'
+import { USER_ACTIONS } from '@/store/actions'
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -24,8 +25,7 @@ instance.interceptors.response.use(
     const refresh = getCookie(process.env.VUE_APP_CBRT)
     if (error.response.status === 401 && !originalRequest._retry && refresh) {
       originalRequest._retry = true
-      const res = await usersApi.refresh({ refresh })
-      saveTokens(res.data)
+      store.dispatch(USER_ACTIONS.REFRESH_TOKEN)
       instance(originalRequest)
     } else {
       store.commit('logout')

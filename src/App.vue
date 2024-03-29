@@ -3,7 +3,6 @@
   import AppLayout from '@/components/Layout/AppLayout.vue'
   import CategoriesComponent from '@/components/Categories/CategoriesComponent.vue'
   import ModalComponent from './components/Modals/ModalComponent.vue'
-  import { getCookie } from './utils'
   import store from './store'
   import { USER_ACTIONS } from './store/actions'
   import { onMounted, ref } from 'vue'
@@ -12,10 +11,7 @@
 
   onMounted(async () => {
     isLoading.value = true
-    const cookie = getCookie(process.env.VUE_APP_CBAT)
-    if (cookie) {
-      await store.dispatch(USER_ACTIONS.GET_PROFILE)
-    }
+    await store.dispatch(USER_ACTIONS.INIT_APP)
     isLoading.value = false
   })
 </script>

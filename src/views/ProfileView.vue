@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import store from '@/store'
   import { edit } from '@/assets/img'
   import { RECIPES_ACTIONS } from '@/store/actions'
@@ -17,12 +17,11 @@
 
   const onTabClick = (tab) => {
     currentTab.value = tab
-    if (data.value.length) return
-    if (tab === 1) {
-      store.dispatch(RECIPES_ACTIONS.GET_MY_BOOKMARKS)
-      return
-    }
   }
+
+  onMounted(() => {
+    store.dispatch(RECIPES_ACTIONS.GET_MY_BOOKMARKS)
+  })
 </script>
 
 <template>
@@ -44,8 +43,8 @@
         </button>
       </div>
       <div class="profile__recipes">
-        <template v-if="data?.length">
-          <RecipeCard v-for="recipe of data" :recipe="recipe" :key="recipe.id" />
+        <template v-if="data.list?.length">
+          <RecipeCard v-for="recipe of data.list" :recipe="recipe" :key="recipe.id" />
         </template>
         <p v-else>Пока нет рецептов</p>
       </div>

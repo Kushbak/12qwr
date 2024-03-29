@@ -16,4 +16,6 @@ export const USER_ACTIONS = {
   REGISTER: 'register',
   GET_USER_BY_ID: 'getUserById',
   GET_PROFILE: 'getProfile',
+  INIT_APP: 'initApp',
+  REFRESH_TOKEN: 'refreshToken',
 }

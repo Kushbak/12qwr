@@ -5,13 +5,17 @@ import { USER_ACTIONS } from '../actions'
 export default {
   state: {
     profile: null,
+    userData: null,
     errors: {},
     isLoading: false,
   },
   getters: {},
   mutations: {
-    setUserData(state, userData) {
+    setProfile(state, userData) {
       state.profile = userData
+    },
+    setUserData(state, userData) {
+      state.userData = userData
     },
     logout(state) {
       state.profile = null
@@ -26,6 +30,21 @@ export default {
     },
   },
   actions: {
+    async [USER_ACTIONS.INIT_APP]({ dispatch }) {
+      const access = getCookie(process.env.VUE_APP_CBAT)
+      const refresh = getCookie(process.env.VUE_APP_CBRT)
+      if (access) {
+        return await dispatch(USER_ACTIONS.GET_PROFILE)
+      }
+      if (refresh) {
+        dispatch(USER_ACTIONS.REFRESH_TOKEN, { refresh })
+        return await dispatch(USER_ACTIONS.GET_PROFILE)
+      }
+    },
+    async [USER_ACTIONS.REFRESH_TOKEN](context, data) {
+      const res = await usersApi.refresh(data)
+      saveTokens(res.data)
+    },
     async [USER_ACTIONS.GET_USER_BY_ID]({ commit }, userId) {
       try {
         const res = await usersApi.getUserById(userId)
@@ -40,7 +59,7 @@ export default {
         const decoded = jwtDecode(cookie)
         if (decoded) {
           const res = await usersApi.getUserById(decoded.user_id)
-          commit('setUserData', res.data)
+          commit('setProfile', res.data)
         }
       } catch (e) {
         console.log(e)

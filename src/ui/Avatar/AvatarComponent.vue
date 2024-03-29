@@ -3,7 +3,6 @@
   import { emptyAvatar } from '@/assets/img'
 
   const props = defineProps(['avatar', 'class'])
-  console.log({ props })
 </script>
 
 <template>

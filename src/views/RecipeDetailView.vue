@@ -98,6 +98,7 @@
       margin-bottom: 16px;
     }
     &__author {
+      cursor: pointer;
       width: 100%;
       font-size: 14px;
       display: flex;
