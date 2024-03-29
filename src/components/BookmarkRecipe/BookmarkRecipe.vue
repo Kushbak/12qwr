@@ -3,7 +3,7 @@
   import { withAuth } from '@/utils/hofs'
   import { RECIPES_ACTIONS } from '@/utils/const'
   import store from '@/store'
-  import ButtonComponentVue from '@/ui/Button/ButtonComponent.vue'
+  import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import { bookmark } from '@/assets/img'
 
   const props = defineProps(['recipe'])
@@ -18,10 +18,10 @@
 </script>
 
 <template>
-  <ButtonComponentVue type="lucid" class="bookmarkBtn" @click="handleSaveClick">
+  <ButtonComponent btnType="lucid" class="bookmarkBtn" @click="handleSaveClick">
     <img :src="bookmark" />
     {{ props.recipe.is_bookmarked ? 'Сохранено' : 'Сохранить рецепт' }}
-  </ButtonComponentVue>
+  </ButtonComponent>
 </template>
 
 <style lang="scss" scoped>

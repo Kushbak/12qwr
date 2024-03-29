@@ -7,6 +7,7 @@
   import { debounce } from '@/utils'
   import { arrowBottom, arrowTop } from '@/assets/img'
   import router from '@/router'
+  import { withAuth } from '@/utils/hofs'
 
   const user = computed(() => store.state.user)
   const isProfileDropdownOpen = ref(false)
@@ -29,6 +30,8 @@
     router.push('/profile/')
   }
 
+  const navigateToRecipeForm = withAuth(() => router.push('/recipeForm'))
+
   const logout = () => {
     store.commit('logout')
   }
@@ -41,14 +44,14 @@
     </router-link>
     <InputComponent class="header__search" placeholder="Поиск" @input="onChange" />
     <div class="header__btns">
-      <ButtonComponent>Добавить рецепт</ButtonComponent>
-      <ButtonComponent v-if="user.profile" type="lucid" @click="handleProfileClick">
+      <ButtonComponent @click="navigateToRecipeForm">Добавить рецепт</ButtonComponent>
+      <ButtonComponent v-if="user.profile" btnType="lucid" @click="handleProfileClick">
         Профиль
         <template #icon>
           <img :src="isProfileDropdownOpen ? arrowTop : arrowBottom" />
         </template>
       </ButtonComponent>
-      <ButtonComponent v-else type="lucid" @click="handleOpenLoginModal">
+      <ButtonComponent v-else btnType="lucid" @click="handleOpenLoginModal">
         Вход/Регистрация
         <template #icon>
           <img :src="arrowBottom" />
@@ -56,8 +59,8 @@
       </ButtonComponent>
       <!-- todo split dropdowns to component -->
       <div class="header__dropdown" v-if="isProfileDropdownOpen && user.profile">
-        <ButtonComponent type="lucid" @click="navigateToProfile"> Перейти в профиль </ButtonComponent>
-        <ButtonComponent type="lucid" class="header__logout" @click="logout"> Выйти </ButtonComponent>
+        <ButtonComponent btnType="lucid" @click="navigateToProfile"> Перейти в профиль </ButtonComponent>
+        <ButtonComponent btnType="lucid" class="header__logout" @click="logout"> Выйти </ButtonComponent>
       </div>
     </div>
   </header>

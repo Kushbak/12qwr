@@ -41,9 +41,9 @@
           {{ ERROR_MESSAGES[user.errors.detail] }}
         </p>
         <div class="login__forgotPassBlock">
-          <ButtonComponent class="login__forgotPass" type="lucid"> Забыли пароль? </ButtonComponent>
+          <ButtonComponent class="login__forgotPass" btnType="lucid"> Забыли пароль? </ButtonComponent>
         </div>
-        <ButtonComponent :disabled="user.isLoading">
+        <ButtonComponent type="submit" :disabled="user.isLoading">
           {{ user.isLoading ? 'Вход...' : 'Войти' }}
         </ButtonComponent>
       </form>
@@ -51,7 +51,7 @@
     </div>
     <div class="login__toRegister">
       <h3>Еще нет аккаунта?</h3>
-      <ButtonComponent type="light" @click="openRegisterModal"> Зарегистрироваться </ButtonComponent>
+      <ButtonComponent btnType="light" @click="openRegisterModal">Зарегистрироваться </ButtonComponent>
     </div>
   </div>
 </template>

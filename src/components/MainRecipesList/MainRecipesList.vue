@@ -36,7 +36,7 @@
           'recipesList__sortBtn',
           recipes.filters.ordering === ORDER_BY.AVG_RATING_DESC && 'recipesList__sortBtn_active',
         ]"
-        type="lucid"
+        btnType="lucid"
         @click="() => onOrderingClick(ORDER_BY.AVG_RATING_DESC)"
       >
         по рейтингу
@@ -46,7 +46,7 @@
           'recipesList__sortBtn',
           recipes.filters.ordering === ORDER_BY.COMMENTS_COUNT_DESC && 'recipesList__sortBtn_active',
         ]"
-        type="lucid"
+        btnType="lucid"
         @click="() => onOrderingClick(ORDER_BY.COMMENTS_COUNT_DESC)"
       >
         по кол-ву комментариев

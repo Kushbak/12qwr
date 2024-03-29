@@ -61,7 +61,7 @@
 <template>
   <div class="categories">
     <ButtonComponent
-      type="lucid"
+      btnType="lucid"
       v-for="(category, index) of categories"
       :key="category"
       :class="['categories__item', allCategories[activeCategory] === category && 'categories__item_active']"
@@ -71,7 +71,7 @@
     </ButtonComponent>
     <ButtonComponent
       class="categories__item"
-      type="lucid"
+      btnType="lucid"
       @click="onMoreCategoriesClick"
       v-if="hiddenCategories.length"
     >
@@ -82,7 +82,7 @@
     </ButtonComponent>
     <div class="categories__dropdown" v-click-outside="hideMoreCategories" v-if="isMoreCategoriesShown">
       <ButtonComponent
-        type="lucid"
+        btnType="lucid"
         v-for="(category, index) of hiddenCategories"
         :key="category"
         class="categories__dropdownItem"

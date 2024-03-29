@@ -2,12 +2,13 @@
   import { ERROR_MESSAGES } from '@/utils/const'
   import { defineModel, defineProps } from 'vue'
 
-  const props = defineProps(['class', 'placeholder', 'onChange', 'type', 'error'])
+  const props = defineProps(['class', 'placeholder', 'onChange', 'type', 'error', 'noMargin'])
+  console.log({ props })
   const modelValue = defineModel()
 </script>
 
 <template>
-  <div :class="['input__container', props.class]">
+  <div :class="['input__container', props.noMargin && 'input__container_noMargin', props.class]">
     <input
       :placeholder="placeholder"
       :class="['input', props.error && 'input_error']"
@@ -21,12 +22,13 @@
 
 <style lang="scss" scoped>
   .input {
-    background-color: #f1f1f1;
+    background-color: var(--color-white-1);
     border-radius: 12px;
     padding: 10px 20px;
     font-size: 16px;
     border: none;
     width: 100%;
+    height: 100%;
     &:focus {
       outline: 1px solid var(--color-main);
       caret-color: var(--color-main);
@@ -38,6 +40,9 @@
 
     &__container {
       margin-bottom: 12px;
+      &_noMargin {
+        margin-bottom: 0;
+      }
     }
   }
 

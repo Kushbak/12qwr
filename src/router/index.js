@@ -2,6 +2,7 @@ import { getCookie } from '@/utils'
 import MainViewVue from '@/views/MainView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import RecipeDetailView from '@/views/RecipeDetailView.vue'
+import RecipeForm from '@/views/RecipeForm.vue'
 import UserProfileView from '@/views/UserProfileView.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
@@ -15,6 +16,14 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: ProfileView,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: '/recipeForm',
+    name: 'Create Recipe',
+    component: RecipeForm,
     meta: {
       auth: true,
     },

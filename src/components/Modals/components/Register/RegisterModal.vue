@@ -39,7 +39,7 @@
   <div class="register__container">
     <div class="register__toLogin">
       <h3>Уже есть аккаунт?</h3>
-      <ButtonComponent type="light" @click="openLoginModal"> Войти </ButtonComponent>
+      <ButtonComponent btnType="light" @click="openLoginModal"> Войти </ButtonComponent>
     </div>
     <div class="register">
       <form class="register__form" @submit.prevent="onSubmit">
