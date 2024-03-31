@@ -3,6 +3,7 @@ import arrowTop from './icons/arrow-top.svg'
 import bookmark from './icons/bookmark.svg'
 import bookmarkActive from './icons/bookmark-active.svg'
 import clock from './icons/clock.svg'
+import check from './icons/check.svg'
 import comment from './icons/comment.svg'
 import edit from './icons/edit.svg'
 import emptyAvatar from './empty-avatar.png'
@@ -25,6 +26,7 @@ export {
   bookmark,
   bookmarkActive,
   clock,
+  check,
   comment,
   edit,
   emptyAvatar,

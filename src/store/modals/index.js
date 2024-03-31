@@ -2,6 +2,7 @@ export default {
   state: {
     currentModal: null,
     props: {},
+    toaster: null,
   },
   getters: {},
   mutations: {
@@ -12,6 +13,17 @@ export default {
     closeModal(state) {
       state.currentModal = null
       state.props = {}
+    },
+    setToast(state, text) {
+      state.toaster = text
+    },
+  },
+  actions: {
+    toast({ commit }, text) {
+      commit('setToast', text)
+      setTimeout(() => {
+        commit('setToast', null)
+      }, 3000)
     },
   },
 }
