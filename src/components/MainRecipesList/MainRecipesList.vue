@@ -54,6 +54,7 @@
     </div>
   </div>
   <div class="recipesList__list">
+    <!-- todo add empty list label -->
     <template v-for="recipe of recipes.data" :key="recipe.id">
       <router-link :to="`/recipe/${recipe.id}`">
         <RecipeCard :recipe="recipe" />
