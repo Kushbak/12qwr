@@ -17,6 +17,7 @@ export default {
       recipes: null,
     },
     recipeDetails: null,
+    errors: null,
   },
   getters: {
     paginationData(state) {
@@ -77,6 +78,9 @@ export default {
         state.recipeDetails.comments_count++
       }
     },
+    setErrors(state, errors) {
+      state.errors = errors
+    },
   },
   actions: {
     async [RECIPES_ACTIONS.GET_ALL_RECIPES]({ state, commit }) {
@@ -130,6 +134,22 @@ export default {
     async [RECIPES_ACTIONS.RATE_RECIPE]({ dispatch, state }, data) {
       await recipesApi.addRate(data)
       dispatch(RECIPES_ACTIONS.GET_RECIPE_BY_ID, state.recipeDetails.id)
+    },
+    async [RECIPES_ACTIONS.CREATE_RECIPE]({ commit }, data) {
+      try {
+        const res = await recipesApi.createRecipe(data)
+        console.log(res)
+      } catch (e) {
+        console.log(e.response.data)
+        if (e.response.data?.errors) {
+          commit('setErrors', e.response.data?.errors)
+        }
+      }
+    },
+    async [RECIPES_ACTIONS.POST_RECIPE_IMAGE](context, data) {
+      const res = await recipesApi.postRecipeImage(data)
+      console.log(res)
+      return res.data.id
     },
   },
 }

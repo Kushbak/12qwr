@@ -11,7 +11,7 @@
   const data = computed(() => {
     return {
       0: store.state.user.profile.recipes,
-      1: store.state.recipes.myBookmarks,
+      1: store.state.recipes.myBookmarks.list,
     }[currentTab.value]
   })
 
@@ -43,8 +43,8 @@
         </button>
       </div>
       <div class="profile__recipes">
-        <template v-if="data.list?.length">
-          <RecipeCard v-for="recipe of data.list" :recipe="recipe" :key="recipe.id" />
+        <template v-if="data?.length">
+          <RecipeCard v-for="recipe of data" :recipe="recipe" :key="recipe.id" />
         </template>
         <p v-else>Пока нет рецептов</p>
       </div>

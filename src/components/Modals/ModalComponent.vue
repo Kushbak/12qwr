@@ -15,18 +15,9 @@
 
 <template>
   <transition>
-    <ModalContainer
-      v-if="modals.currentModal !== null"
-      :whiteClose="withWhiteClose"
-    >
-      <LoginModal
-        v-if="modals.currentModal === MODAL_KEYS.LOGIN"
-        v-bind="modals.props"
-      />
-      <RegisterModal
-        v-if="modals.currentModal === MODAL_KEYS.REGISTER"
-        v-bind="modals.props"
-      />
+    <ModalContainer v-if="modals.currentModal !== null" :whiteClose="withWhiteClose">
+      <LoginModal v-if="modals.currentModal === MODAL_KEYS.LOGIN" v-bind="modals.props" />
+      <RegisterModal v-if="modals.currentModal === MODAL_KEYS.REGISTER" v-bind="modals.props" />
     </ModalContainer>
   </transition>
 </template>

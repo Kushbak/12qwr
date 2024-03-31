@@ -9,6 +9,8 @@ export const RECIPES_ACTIONS = {
   GET_RECIPE_BY_ID: 'getRecipeById',
   ADD_COMMENT_TO_RECIPE: 'addCommentToRecipe',
   RATE_RECIPE: 'rateRecipe',
+  CREATE_RECIPE: 'createRecipe',
+  POST_RECIPE_IMAGE: 'postRecipeImage',
 }
 
 export const USER_ACTIONS = {

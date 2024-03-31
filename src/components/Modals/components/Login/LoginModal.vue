@@ -3,7 +3,7 @@
   import store from '@/store'
   import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
-  import { ERROR_MESSAGES, MODAL_KEYS } from '@/utils/const'
+  import { ERROR_MESSAGES_LOCALE, MODAL_KEYS } from '@/utils/const'
   import { USER_ACTIONS } from '@/store/actions'
 
   const user = computed(() => store.state.user)
@@ -38,7 +38,7 @@
         <InputComponent v-model="formData.email" placeholder="Адрес электронной почты" />
         <InputComponent v-model="formData.password" placeholder="Пароль" type="password" />
         <p class="error" v-if="user.errors">
-          {{ ERROR_MESSAGES[user.errors.detail] }}
+          {{ ERROR_MESSAGES_LOCALE[user.errors.detail] }}
         </p>
         <div class="login__forgotPassBlock">
           <ButtonComponent class="login__forgotPass" btnType="lucid"> Забыли пароль? </ButtonComponent>

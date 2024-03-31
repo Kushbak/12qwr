@@ -1,19 +1,23 @@
 <script setup>
   import { defineProps } from 'vue'
   import { withAuth } from '@/utils/hofs'
-  import { RECIPES_ACTIONS } from '@/utils/const'
+  import { RECIPES_ACTIONS } from '@/store/actions'
   import store from '@/store'
   import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import { bookmark } from '@/assets/img'
+  import { TOASTER_MESSAGES } from '@/utils/const'
 
   const props = defineProps(['recipe'])
 
   const handleSaveClick = withAuth(async () => {
     // todo add reactive changing of layout for bookmarks
     await store.dispatch(RECIPES_ACTIONS.BOOKMARK_RECIPE, {
-      recipe: props.value.recipe.value.id,
-      is_bookmarked: !props.value.recipe.value.is_bookmarked,
+      recipe: props.recipe.id,
+      is_bookmarked: !props.recipe.is_bookmarked,
     })
+    if (!props.recipe.is_bookmarked) {
+      store.dispatch('toast', TOASTER_MESSAGES.recipeBookmarked)
+    }
   })
 </script>
 

@@ -27,9 +27,10 @@ instance.interceptors.response.use(
       originalRequest._retry = true
       store.dispatch(USER_ACTIONS.REFRESH_TOKEN)
       instance(originalRequest)
-    } else {
-      store.commit('logout')
+    } else if (!refresh) {
+      store.dispatch('logout')
     }
+    return Promise.reject(error)
   },
 )
 
@@ -44,6 +45,8 @@ export const recipesApi = {
   addRate: async (data) => instance.post('recipe/rates', data),
   changeRecipe: async (recipeId, data) => instance.put(`recipe/${recipeId}/`, data),
   deleteRecipe: async (recipeId) => instance.delete(`recipe/${recipeId}`),
+  postRecipeImage: async (data) =>
+    instance.post('common/image/', data, { headers: { 'Content-Type': 'multipart/formdata' } }),
 }
 
 export const usersApi = {
