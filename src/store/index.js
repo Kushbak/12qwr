@@ -3,7 +3,6 @@ import recipes from './recipes'
 import modals from './modals'
 import user from './user'
 import { recipesApi } from '@/api'
-import { ALL_CATEGORY } from '@/utils/const'
 
 export default createStore({
   state: {
@@ -22,7 +21,7 @@ export default createStore({
   actions: {
     async getAllCategories({ commit }) {
       const res = await recipesApi.getAllCategories({ limit: 50 })
-      commit('setCategories', [ALL_CATEGORY, ...res.data.list])
+      commit('setCategories', res.data.list)
     },
   },
   modules: {

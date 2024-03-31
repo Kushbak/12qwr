@@ -5,13 +5,13 @@
   import ButtonComponent from '@/ui/Button/ButtonComponent'
   import { arrowBottom, arrowTop } from '@/assets/img'
   import router from '@/router'
+  import { ALL_CATEGORY } from '@/utils/const'
 
   const activeCategory = computed(() => store.state.recipes.filters.category)
   const allCategories = computed(() => store.state.categories)
   const categories = ref([])
   const hiddenCategories = ref([])
   const isMoreCategoriesShown = ref(false)
-
   const onMoreCategoriesClick = () => {
     isMoreCategoriesShown.value = !isMoreCategoriesShown.value
   }
@@ -25,10 +25,6 @@
   const onCategoryClick = (category) => {
     if (router.currentRoute !== '/') router.push('/')
     if (category === activeCategory.value) return
-    if (category === 0) {
-      store.dispatch(RECIPES_ACTIONS.GET_RECIPES_BY_CATEGORY, 0)
-      return
-    }
     store.dispatch(RECIPES_ACTIONS.GET_RECIPES_BY_CATEGORY, category)
   }
 
@@ -62,10 +58,17 @@
   <div class="categories">
     <ButtonComponent
       btnType="lucid"
-      v-for="(category, index) of categories"
-      :key="category"
-      :class="['categories__item', allCategories[activeCategory] === category && 'categories__item_active']"
-      @click="() => onCategoryClick(index)"
+      :class="['categories__item', activeCategory === 0 && 'categories__item_active']"
+      @click="() => onCategoryClick(ALL_CATEGORY.id)"
+    >
+      {{ ALL_CATEGORY.name }}
+    </ButtonComponent>
+    <ButtonComponent
+      btnType="lucid"
+      v-for="category of categories"
+      :key="category.id"
+      :class="['categories__item', category.id === activeCategory && 'categories__item_active']"
+      @click="() => onCategoryClick(category.id)"
     >
       {{ category?.name }}
     </ButtonComponent>
@@ -83,10 +86,10 @@
     <div class="categories__dropdown" v-click-outside="hideMoreCategories" v-if="isMoreCategoriesShown">
       <ButtonComponent
         btnType="lucid"
-        v-for="(category, index) of hiddenCategories"
-        :key="category"
+        v-for="category of hiddenCategories"
+        :key="category.id"
         class="categories__dropdownItem"
-        @click="() => onCategoryClick(categories.length + index)"
+        @click="() => onCategoryClick(category.id)"
       >
         {{ category?.name }}
       </ButtonComponent>

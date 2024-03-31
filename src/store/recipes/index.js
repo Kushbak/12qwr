@@ -2,6 +2,7 @@ import { recipesApi } from '@/api'
 import { formatFilters, getInitialFilters } from '@/utils'
 import store from '..'
 import { RECIPES_ACTIONS } from '../actions'
+import { ALL_CATEGORY } from '@/utils/const'
 
 // todo too many actions and dispatches here
 export default {
@@ -35,7 +36,9 @@ export default {
     setRecipesData(state, newRecipesData) {
       const categories = store.state.categories
       state.data = newRecipesData.list
-      state.title = state.filters.category ? categories[state.filters.category].name || 'Прочее' : categories[0].name
+      state.title = state.filters.category
+        ? categories.find((item) => item.id === state.filters.category)?.name || 'Прочее'
+        : ALL_CATEGORY.name
       state.totalCount = newRecipesData.total_count
     },
     setOrdering(state, newOrdering) {

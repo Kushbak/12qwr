@@ -25,12 +25,13 @@ instance.interceptors.response.use(
     const refresh = getCookie(process.env.VUE_APP_CBRT)
     if (error.response.status === 401 && !originalRequest._retry && refresh) {
       originalRequest._retry = true
-      store.dispatch(USER_ACTIONS.REFRESH_TOKEN)
+      await store.dispatch(USER_ACTIONS.REFRESH_TOKEN, { refresh })
       instance(originalRequest)
     } else if (!refresh) {
       store.dispatch('logout')
+    } else {
+      return Promise.reject(error)
     }
-    return Promise.reject(error)
   },
 )
 
