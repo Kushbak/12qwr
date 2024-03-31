@@ -5,10 +5,13 @@
   import ButtonComponent from '@/ui/Button/ButtonComponent.vue'
   import FileInputComponent from '@/ui/FileInput/FileInputComponent.vue'
   import InputComponent from '@/ui/Input/InputComponent.vue'
+  import SelectComponent from '@/components/Select/SelectComponent.vue'
   import { ERROR_MESSAGES_LOCALE } from '@/utils/const'
   import { recipeCreateValidation } from '@/utils/validators'
+  import { convertToSelect } from '@/utils'
   import useVuelidate from '@vuelidate/core'
   import { reactive, ref } from 'vue'
+  import router from '@/router'
 
   const formData = reactive({
     name: 'Мощный сочный рецепт тележки',
@@ -35,12 +38,18 @@
 
   const handleChangeCookingHours = (value) => {
     const [day, , minutes] = formData.cooking_time.split(':')
+    console.log({ value })
     formData.cooking_time = `${day}:${value}:${minutes}`
   }
 
   const handleChangeCookingMinutes = (value) => {
     const [day, hours] = formData.cooking_time.split(':')
+    console.log({ value })
     formData.cooking_time = `${day}:${hours}:${value}`
+  }
+
+  const handleCategoryChange = (value) => {
+    formData.category = value.id
   }
 
   const onSubmit = async () => {
@@ -56,19 +65,13 @@
       console.log('invalid data', v$)
       return
     }
-    store.dispatch(RECIPES_ACTIONS.CREATE_RECIPE, formData)
-    console.log({ formData, ingredients })
+    await store.dispatch(RECIPES_ACTIONS.CREATE_RECIPE, formData)
+    router.push('/')
+    store.dispatch('toast', 'Рецепт успешно создан')
+    // todo scroll to input that have error on error catch
   }
 </script>
 
-<!-- todo
-  add num validator for ingredients amount
-  add ingredients to formData concatinating
-  add img submitting to another endpoint to get img id to formData
-  then submit formdata to post recipe
-  add select to category
-  add validator for time inputs
--->
 <template>
   <form class="recipeForm" @submit.prevent="onSubmit">
     <div class="recipeForm__titleBlock">
@@ -130,11 +133,10 @@
     </div>
     <div class="inputBlock">
       <p class="inputBlock__label">Категория блюда:</p>
-      <InputComponent
-        v-model="formData.category"
+      <SelectComponent
+        @change="handleCategoryChange"
         placeholder="Выберите категорию"
-        :noMargin="true"
-        :error="v$.category.$errors[0]?.$message"
+        :data="convertToSelect(store.state.categories, 'name', 'id')"
       />
     </div>
     <div class="inputBlock inputBlock_col">

@@ -36,7 +36,7 @@
       {{ recipe.user.username }}
     </div>
     <RecipeMeta :recipe="recipe" :withSave="true" />
-    <iframe height="360" width="100%" :src="recipe.cooking_url" />
+    <iframe height="360" width="100%" :src="recipe.cooking_url" v-if="recipe.cooking_url" />
     <p class="recipe__description">{{ recipe.description }}</p>
     <img class="recipe__img" :src="recipe.image.file" :alt="recipe.name" />
     <div class="recipe__ingredients">
@@ -70,6 +70,8 @@
     </div>
     <div class="recipe__comments">
       <h4 class="recipe__subtitle">Комментарии({{ recipe.comments_count }})</h4>
+      <!-- todo add empty comments label -->
+      <!-- todo fix li points margin -->
       <CommentsBlock :comments="recipe.comments" :recipeId="recipe.id" />
     </div>
   </div>
@@ -119,7 +121,8 @@
       height: 380px;
       border-radius: 12px;
     }
-    &__ingredients {
+    &__ingredients,
+    &__cooking {
       width: 100%;
     }
     &__ingredient {

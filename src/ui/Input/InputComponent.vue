@@ -3,7 +3,7 @@
   import { defineModel, defineProps, defineEmits } from 'vue'
 
   const props = defineProps(['class', 'placeholder', 'onChange', 'type', 'error', 'noMargin', 'maxLength', 'maxNumber'])
-  const emit = defineEmits('input')
+  const emit = defineEmits(['input'])
   const modelValue = defineModel()
 
   const handleChange = (e) => {

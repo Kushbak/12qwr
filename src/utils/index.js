@@ -3,16 +3,16 @@ import { HOUR_ON_SECONDS } from './const'
 export const formatTime = (timeString) => {
   const [days, hours, minutes] = timeString.split(':').map(Number)
   let formattedTime = ''
-
+  // todo write word converter to plural form related to number
   if (days > 0) {
-    formattedTime += `${days} дней`
+    formattedTime += `${days} дней `
   }
 
   if (hours > 0 || days > 0) {
-    formattedTime += `${hours} час`
+    formattedTime += `${hours} час `
   }
 
-  formattedTime += `${minutes} минут`
+  formattedTime += `${minutes} минут `
 
   return formattedTime.trim()
 }
@@ -157,4 +157,12 @@ export const saveTokens = (data) => {
     const refreshExp = getTokenExpirationInSeconds(data.refresh)
     setCookie(process.env.VUE_APP_CBRT, data.refresh, refreshExp)
   }
+}
+
+export const convertToSelect = (data, label, value, id) => {
+  return data.map((item) => ({
+    id: item[id || value],
+    label: item[label],
+    value: item[value],
+  }))
 }
