@@ -11,6 +11,9 @@ jobs:
       - name: Lint
         run: npm run lint
   test:
+    # add deps to start test after lint
+    # remove need to start jobs on parallel
+    needs: [lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
