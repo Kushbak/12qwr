@@ -12,8 +12,8 @@
   const user = computed(() => store.state.user)
   const isProfileDropdownOpen = ref(false)
 
-  const onChange = debounce((e) => {
-    store.dispatch(RECIPES_ACTIONS.SEARCH_RECIPES, e.target.value)
+  const onChange = debounce((value) => {
+    store.dispatch(RECIPES_ACTIONS.SEARCH_RECIPES, value)
   }, 700)
 
   const handleOpenLoginModal = () => {

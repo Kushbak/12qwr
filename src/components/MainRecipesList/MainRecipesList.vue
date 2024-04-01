@@ -5,6 +5,7 @@
   import store from '@/store'
   import { RECIPES_ACTIONS } from '@/store/actions'
   import { ORDER_BY } from '@/utils/const'
+  import EmptyDataComponent from '@/ui/EmptyData/EmptyDataComponent.vue'
 
   const props = defineProps(['isSearch', 'title', 'data'])
   const recipes = computed(() => store.state.recipes)
@@ -54,11 +55,15 @@
     </div>
   </div>
   <div class="recipesList__list">
-    <!-- todo add empty list label -->
-    <template v-for="recipe of recipes.data" :key="recipe.id">
-      <router-link :to="`/recipe/${recipe.id}`">
-        <RecipeCard :recipe="recipe" />
-      </router-link>
+    <template v-if="!recipes.data.length && isSearch">
+      <EmptyDataComponent height="400" text-key="recipes" />
+    </template>
+    <template v-else>
+      <template v-for="recipe of recipes.data" :key="recipe.id">
+        <router-link :to="`/recipe/${recipe.id}`">
+          <RecipeCard :recipe="recipe" />
+        </router-link>
+      </template>
     </template>
   </div>
 </template>

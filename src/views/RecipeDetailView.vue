@@ -70,7 +70,6 @@
     </div>
     <div class="recipe__comments">
       <h4 class="recipe__subtitle">Комментарии({{ recipe.comments_count }})</h4>
-      <!-- todo add empty comments label -->
       <!-- todo fix li points margin -->
       <CommentsBlock :comments="recipe.comments" :recipeId="recipe.id" />
     </div>

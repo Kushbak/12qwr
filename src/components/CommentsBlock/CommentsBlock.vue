@@ -7,6 +7,7 @@
   import ButtonComponent from '@/ui/Button/ButtonComponent'
   import InputComponent from '@/ui/Input/InputComponent'
   import AvatarComponent from '@/ui/Avatar/AvatarComponent'
+  import EmptyDataComponent from '@/ui/EmptyData/EmptyDataComponent.vue'
 
   const props = defineProps(['comments', 'recipeId'])
 
@@ -22,8 +23,8 @@
 </script>
 
 <template>
-  <template v-for="commentData of props.comments" :key="commentData.id">
-    <div class="comment">
+  <template v-if="props.comments.length">
+    <div class="comment" v-for="commentData of props.comments" :key="commentData.id">
       <div class="comment__author">
         <AvatarComponent :avatar="commentData.user.avatar?.file" />
         <div class="comment__meta">
@@ -33,6 +34,9 @@
       </div>
       <p class="comment__text">{{ commentData.text }}</p>
     </div>
+  </template>
+  <template v-else>
+    <EmptyDataComponent text-key="comments" />
   </template>
   <div class="comment__inputBlock">
     <InputComponent class="comment__input" placeholder="Добавить комментарий" v-model="commentInput" />
