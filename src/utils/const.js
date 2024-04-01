@@ -48,3 +48,10 @@ export const TOASTER_MESSAGES = {
 }
 
 export const HOUR_ON_SECONDS = 3600
+
+export const CONJUGATIONS = {
+  days: ['день', 'дня', 'дней'],
+  hours: ['час', 'часа', 'часов'],
+  minutes: ['минута', 'минуты', 'минут'],
+  seconds: ['секунда', 'секунды', 'секунд'],
+}

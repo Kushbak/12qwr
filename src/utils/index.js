@@ -1,18 +1,24 @@
-import { HOUR_ON_SECONDS } from './const'
+import { CONJUGATIONS, HOUR_ON_SECONDS } from './const'
+
+// todo доработать формулу
+const conjugate = (num, words) => {
+  if (num === 1) return words[0]
+  if (num > 1 && num < 5) return words[1]
+  return words[2]
+}
 
 export const formatTime = (timeString) => {
   const [days, hours, minutes] = timeString.split(':').map(Number)
   let formattedTime = ''
-  // todo write word converter to plural form related to number
   if (days > 0) {
-    formattedTime += `${days} дней `
+    formattedTime += `${days} ${conjugate(days, CONJUGATIONS.days)} `
   }
 
-  if (hours > 0 || days > 0) {
-    formattedTime += `${hours} час `
+  if (hours > 0) {
+    formattedTime += `${hours} ${conjugate(hours, CONJUGATIONS.hours)} `
   }
 
-  formattedTime += `${minutes} минут `
+  formattedTime += `${minutes} ${conjugate(minutes, CONJUGATIONS.minutes)} `
 
   return formattedTime.trim()
 }
@@ -20,14 +26,12 @@ export const formatTime = (timeString) => {
 export const formatCommentDate = (dateString) => {
   const date = new Date(dateString)
 
-  // Get day, month, year, hours, and minutes
   const day = date.getDate().toString().padStart(2, '0')
   const month = (date.getMonth() + 1).toString().padStart(2, '0')
   const year = date.getFullYear()
   const hours = date.getHours().toString().padStart(2, '0')
   const minutes = date.getMinutes().toString().padStart(2, '0')
 
-  // Format the date
   const formattedDate = `${day}.${month}.${year} в ${hours}:${minutes}`
 
   return formattedDate
