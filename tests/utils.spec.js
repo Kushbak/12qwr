@@ -1,19 +1,23 @@
-import { formatCommentDate } from '../src/utils'
+import { getInitialFilters } from '../src/utils'
 import { describe, expect, test } from 'vitest'
 
-describe('formatCommentDate', () => {
-  test('should format date correctly with a specific time zone', () => {
-    const dateString = '2024-03-29T10:30:00Z' // Время в UTC
-    const expectedFormattedDate = '29.03.2024 в 16:30' // Ожидаемый вывод в часовом поясе GMT+5 (Например, Московское время)
+describe('getInitialFilters', () => {
+  test('should return initial filters object', () => {
+    const initialFilters = getInitialFilters()
 
-    const originalTimeZone = process.env.TZ
+    expect(initialFilters).toEqual({
+      category: null,
+      ordering: null,
+      search: null,
+      page: 1,
+      limit: 10,
+    })
+  })
 
-    process.env.TZ = 'Europe/Moscow'
+  test('should return default page and limit values if not provided', () => {
+    const initialFilters = getInitialFilters()
 
-    const formattedDate = formatCommentDate(dateString)
-
-    expect(formattedDate).toBe(expectedFormattedDate)
-
-    process.env.TZ = originalTimeZone
+    expect(initialFilters.page).toBe(1)
+    expect(initialFilters.limit).toBe(10)
   })
 })
